@@ -39,30 +39,60 @@ function useLS(k,d){
 
 // Default product catalog with cost basis for profit calc
 const PRODUCT_DEFAULTS = {
-  "Autumn Reading Journal (digital)":     {price:8.99,  cost:0,    type:"digital"},
-  "Autumn Reading Journal (physical)":    {price:24.99, cost:6.10, type:"physical"},
-  "Weekly Planner (digital)":             {price:9.99,  cost:0,    type:"digital"},
-  "Weekly Planner (physical)":            {price:24.99, cost:6.63, type:"physical"},
-  "Self-Reflection Journal (digital)":    {price:8.99,  cost:0,    type:"digital"},
-  "Self-Reflection Journal (physical)":   {price:22.99, cost:13.66,type:"physical"},
-  "Morning Reflection Journal (digital)": {price:9.99,  cost:0,    type:"digital"},
-  "Morning Reflection Journal (physical)":{price:22.99, cost:6.01, type:"physical"},
-  "Autumn TBR Journal (digital)":         {price:7.99,  cost:0,    type:"digital"},
-  "Autumn TBR Journal (physical)":        {price:19.99, cost:3.89, type:"physical"},
-  "Reading Challenge (digital)":          {price:6.99,  cost:0,    type:"digital"},
-  "Reading Challenge (physical)":         {price:24.99, cost:4.51, type:"physical"},
-  "Reader\'s Log / Classicist\'s Reading Journal (physical)":{price:24.99, cost:6.41, type:"physical"},
-  "Commonplace Book (digital)":           {price:18.99, cost:0,    type:"digital"},
-  "Commonplace Book (physical)":          {price:44.99, cost:15.28,type:"physical"},
-  "Classicist\'s Companion (physical)":   {price:39.99, cost:17.31,type:"physical"},
-  "Bookmark Set (digital)":               {price:4.99,  cost:0,    type:"digital"},
-  "Bookmark Set (physical)":              {price:10.99, cost:2.14, type:"physical"},
-  "Sticker Sheet (each)":                 {price:7.99,  cost:0,    type:"digital"},
-  "Sticker Bundle (Vol I+II)":            {price:12.99, cost:0,    type:"digital"},
-  "Latin Quote Art (each)":               {price:3.49,  cost:0,    type:"digital"},
-  "Wall Art Bundle":                      {price:10.99, cost:0,    type:"digital"},
-  "Book Club Kit":                        {price:9.99,  cost:0,    type:"digital"},
-};
+  // ── JOURNALS & PLANNERS (Digital) ──
+  "Autumn Reading Journal (digital)":            {price:8.99,  cost:0,    type:"digital"},
+  "Autumn TBR Journal (digital)":                {price:7.99,  cost:0,    type:"digital"},
+  "Weekly Planner (digital)":                    {price:9.99,  cost:0,    type:"digital"},
+  "Self-Reflection Journal (digital)":           {price:8.99,  cost:0,    type:"digital"},
+  "Morning Reflection Journal (digital)":        {price:9.99,  cost:0,    type:"digital"},
+  "Scholar\'s Daily Reading 60-Day (digital)":  {price:4.99,  cost:0,    type:"digital"},
+  "Reading Challenge (digital)":                 {price:6.99,  cost:0,    type:"digital"},
+  "Commonplace Book (digital)":                  {price:18.99, cost:0,    type:"digital"},
+  "Classicist\'s Reading Journal (digital+stickers)":{price:13.99,cost:0,type:"digital"},
+  // ── JOURNALS & PLANNERS (Physical) ──
+  "Autumn Reading Journal (physical)":           {price:24.99, cost:6.10, type:"physical"},
+  "Autumn TBR Journal (physical)":               {price:19.99, cost:3.89, type:"physical"},
+  "Weekly Planner (physical)":                   {price:24.99, cost:6.63, type:"physical"},
+  "Self-Reflection Journal (physical)":          {price:22.99, cost:13.66,type:"physical"},
+  "Morning Reflection Journal (physical)":       {price:22.99, cost:6.01, type:"physical"},
+  "Scholar\'s Daily Reading 60-Day (physical)": {price:27.99, cost:6.50, type:"physical"},
+  "Reading Challenge (physical)":                {price:24.99, cost:4.51, type:"physical"},
+  "Commonplace Book (physical)":                 {price:44.99, cost:15.28,type:"physical"},
+  "Classicist\'s Reading Journal (physical)":   {price:24.99, cost:6.41, type:"physical"},
+  "Classicist\'s Companion (physical)":         {price:34.99, cost:17.31,type:"physical"},
+  // ── LANGUAGE SERIES (Digital) ──
+  "Ancient Scholar Hebrew Journal (digital)":    {price:9.99,  cost:0,    type:"digital"},
+  "Ancient Scholar Greek Journal (digital)":     {price:9.99,  cost:0,    type:"digital"},
+  "Ancient Scholar Old English Journal (digital)":{price:9.99, cost:0,    type:"digital"},
+  "Ancient Scholar Aramaic Journal (digital)":   {price:9.99,  cost:0,    type:"digital"},
+  "Contemplative Scholar\'s Journal (digital)": {price:9.99,  cost:0,    type:"digital"},
+  "Language Notecards Set of 8 (digital)":       {price:4.99,  cost:0,    type:"digital"},
+  // ── LANGUAGE SERIES (Physical) ──
+  "Ancient Scholar Hebrew Journal (physical)":   {price:22.99, cost:6.01, type:"physical"},
+  "Ancient Scholar Greek Journal (physical)":    {price:22.99, cost:6.01, type:"physical"},
+  "Ancient Scholar Old English Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
+  // ── WALL ART & PRINTS ──
+  "Latin Quote Art (each)":                      {price:3.49,  cost:0,    type:"digital"},
+  "Latin Quote Art Bundle Vol I":                {price:10.99, cost:0,    type:"digital"},
+  "Latin Quote Art Bundle Vol II":               {price:6.99,  cost:0,    type:"digital"},
+  "Latin Quote Art Complete Collection":         {price:10.99, cost:0,    type:"digital"},
+  "Botanical Print (each)":                      {price:3.49,  cost:0,    type:"digital"},
+  "Botanical Print Bundle":                      {price:6.99,  cost:0,    type:"digital"},
+  // ── STATIONERY ──
+  "Sticker Sheet Vol I":                         {price:7.99,  cost:0,    type:"digital"},
+  "Sticker Sheet Vol II":                        {price:7.99,  cost:0,    type:"digital"},
+  "Sticker Bundle (Vol I+II)":                   {price:12.99, cost:0,    type:"digital"},
+  "Reading Log Single Page":                     {price:2.99,  cost:0,    type:"digital"},
+  "Daily Notepad":                               {price:2.99,  cost:0,    type:"digital"},
+  "Book Club Kit":                               {price:9.99,  cost:0,    type:"digital"},
+  // ── BOOKMARKS (Physical — handmade) ──
+  "Bookmark Set I — Autumn Scholar":             {price:12.99, cost:2.97, type:"physical"},
+  "Bookmark Set II — Literary Parchment":        {price:12.99, cost:2.97, type:"physical"},
+  "Bookmark Set III — Autumn Vol II":            {price:12.99, cost:2.97, type:"physical"},
+  "Bookmark Set IV — Winter Vol I":              {price:12.99, cost:2.97, type:"physical"},
+  "Bookmark Set V — Advent":                     {price:12.99, cost:2.97, type:"physical"},
+  "Bookmark Set VI — Gift Edition":              {price:12.99, cost:2.97, type:"physical"},
+}
 
 function todayISO(){return new Date().toISOString().slice(0,10);}
 
@@ -259,7 +289,7 @@ function IncomeTab({income,setIncome}){
 }
 
 // ── EXPENSES TAB ──
-const EXPENSE_CATEGORIES=["Materials","Lulu Printing","Etsy Fees","Shipping","Equipment","Marketing","Subscriptions","Other"];
+const EXPENSE_CATEGORIES=["Materials","Lulu Printing","Etsy Fees","Shopify","Shipping","Equipment","Marketing","Subscriptions","Domain & Hosting","Other"];
 
 function ExpensesTab({expenses,setExpenses}){
   const[form,setForm]=useState({date:todayISO(),category:EXPENSE_CATEGORIES[0],amount:"",note:""});
@@ -335,10 +365,13 @@ function ProductsTab(){
         "Reference costs used for profit calculations")
     ),
     Object.entries(PRODUCT_DEFAULTS).map(([name,d])=>{
-      const etsyFee=d.price*0.065+0.20; // approx Etsy + payment processing
-      const fulfillCost=d.type==="physical"?7.50:0; // packaging + Media Mail shipping
-      const profit=d.price-d.cost-etsyFee-fulfillCost;
-      const margin=(profit/d.price)*100;
+      const etsyFee=d.price*0.065+0.20;
+      const shopifyFee=d.price*0.029+0.30;
+      const fulfillCost=d.type==="physical"?7.50:0;
+      const profitEtsy=d.price-d.cost-etsyFee-fulfillCost;
+      const profitShopify=d.price-d.cost-shopifyFee-fulfillCost;
+      const margin=(profitShopify/d.price)*100;
+      const profit=profitShopify;
       return React.createElement("div",{key:name,style:{background:"#231808",
         border:"1px solid #C9A84C22",borderRadius:10,padding:"10px 12px",marginBottom:6}},
         React.createElement("div",{style:{display:"flex",justifyContent:"space-between",
@@ -369,7 +402,7 @@ function ProductsTab(){
     }),
     React.createElement("div",{style:{fontSize:10,color:"#F5E6C855",fontStyle:"italic",
       marginTop:10,textAlign:"center"}},
-      "Fees estimated at Etsy 6.5% + $0.20 transaction fee. Physical cost includes Lulu print + packaging.")
+      "Fees estimated at Etsy 6.5% + $0.20 · Shopify 2.9% + $0.30. Physical cost includes Lulu print + $7.50 packaging/shipping. Bookmark physical cost = ink + cardstock + pouches + ribbon + packaging.")
   );
 }
 
@@ -395,8 +428,10 @@ function GoalsTab({goals,setGoals}){
       React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
         textTransform:"uppercase",marginBottom:8},className:"cz"},"Equipment Payback Tracker"),
       React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6}},
-        "Bookmark setup cost ~$80. At ~$8.85 profit per physical bookmark set, that's roughly "),
-      React.createElement("span",{style:{color:GOLD_LT,fontWeight:"bold"}},"9 sets to break even.")
+        "HP 64XL ink cartridge ~$68.98 → prints ~24 bookmark sets. At $7.11 profit/set (Shopify rate) = $170.64 gross profit per cartridge. Break even on ink after "),
+      React.createElement("span",{style:{color:GOLD_LT,fontWeight:"bold"}},"10 sets sold."),
+      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6,marginTop:8}},
+        "Shopify subscription: $1/mo × 3 months = $3 trial. After trial: $39/mo. Break even on subscription at ~5–6 sales/month.")
     )
   );
 }
@@ -429,4 +464,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(
 </script>
 </body>
 </html>
- 

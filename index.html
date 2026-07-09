@@ -177,6 +177,14 @@ function IncomeTab({income,setIncome}){
     const def=PRODUCT_DEFAULTS[name];
     setForm({...form,product:name,amount:def?def.price:0});
   }
+  const[incomeSort,setIncomeSort]=useState("date-desc");
+  const sortedIncome=[...income].sort((a,b)=>{
+    if(incomeSort==="date-desc") return b.date.localeCompare(a.date);
+    if(incomeSort==="date-asc")  return a.date.localeCompare(b.date);
+    if(incomeSort==="amount-desc") return b.amount-a.amount;
+    if(incomeSort==="amount-asc")  return a.amount-b.amount;
+    return 0;
+  });
   const total=income.reduce((a,i)=>a+i.amount,0);
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
     React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
@@ -201,9 +209,17 @@ function IncomeTab({income,setIncome}){
       )
     ),
     React.createElement("div",null,
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Recent Sales"),
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}},
+        React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase"},className:"cz"},"Recent Sales"),
+        React.createElement("select",{value:incomeSort,onChange:e=>setIncomeSort(e.target.value),style:{fontSize:10,padding:"4px 6px",background:"#231808",border:"1px solid #C9A84C33",borderRadius:6,color:GOLD_LT}},
+          React.createElement("option",{value:"date-desc"},"Date (newest first)"),
+          React.createElement("option",{value:"date-asc"},"Date (oldest first)"),
+          React.createElement("option",{value:"amount-desc"},"Amount (high to low)"),
+          React.createElement("option",{value:"amount-asc"},"Amount (low to high)")
+        )
+      ),
       income.length===0&&React.createElement("div",{style:{textAlign:"center",color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No sales logged yet"),
-      income.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #2D4A3E44",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
+      sortedIncome.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #2D4A3E44",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
         React.createElement("div",{style:{flex:1}},
           React.createElement("div",{style:{fontSize:11,color:PARCH}},e.product+(e.qty>1?" x"+e.qty:"")),
           React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},e.date+(e.note?" · "+e.note:""))
@@ -217,6 +233,7 @@ function IncomeTab({income,setIncome}){
 
 function ExpensesTab({expenses,setExpenses}){
   const[form,setForm]=useState({date:todayISO(),category:EXPENSE_CATEGORIES[0],amount:"",note:""});
+  const[sortBy,setSortBy]=useState("date-desc");
   function addEntry(){
     if(!form.amount)return;
     setExpenses(prev=>[{...form,amount:parseFloat(form.amount),id:Date.now()},...prev]);
@@ -224,6 +241,14 @@ function ExpensesTab({expenses,setExpenses}){
   }
   function removeEntry(id){setExpenses(prev=>prev.filter(e=>e.id!==id));}
   const total=expenses.reduce((a,e)=>a+e.amount,0);
+  const sorted=[...expenses].sort((a,b)=>{
+    if(sortBy==="date-desc") return b.date.localeCompare(a.date);
+    if(sortBy==="date-asc")  return a.date.localeCompare(b.date);
+    if(sortBy==="amount-desc") return b.amount-a.amount;
+    if(sortBy==="amount-asc")  return a.amount-b.amount;
+    if(sortBy==="category")  return a.category.localeCompare(b.category);
+    return 0;
+  });
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
     React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
       React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"Expenses"),
@@ -243,9 +268,18 @@ function ExpensesTab({expenses,setExpenses}){
       )
     ),
     React.createElement("div",null,
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Recent Expenses"),
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}},
+        React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase"},className:"cz"},"Expenses"),
+        React.createElement("select",{value:sortBy,onChange:e=>setSortBy(e.target.value),style:{fontSize:10,padding:"4px 6px",background:"#231808",border:"1px solid #C9A84C33",borderRadius:6,color:GOLD_LT}},
+          React.createElement("option",{value:"date-desc"},"Date (newest first)"),
+          React.createElement("option",{value:"date-asc"},"Date (oldest first)"),
+          React.createElement("option",{value:"amount-desc"},"Amount (high to low)"),
+          React.createElement("option",{value:"amount-asc"},"Amount (low to high)"),
+          React.createElement("option",{value:"category"},"Category (A-Z)")
+        )
+      ),
       expenses.length===0&&React.createElement("div",{style:{textAlign:"center",color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No expenses logged yet"),
-      expenses.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #6B273744",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
+      sorted.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #6B273744",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
         React.createElement("div",{style:{flex:1}},
           React.createElement("div",{style:{fontSize:11,color:PARCH}},e.category),
           React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},e.date+(e.note?" · "+e.note:""))

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TCD Finances">
 <title>TCD Finances</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -15,8 +14,7 @@
 body{background:#1a1208;font-family:"Cormorant Garamond",Georgia,serif;color:#F5E6C8;overflow-x:hidden}
 .cz{font-family:"Cinzel",Georgia,serif}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,select{font-family:inherit;background:#231808;border:1px solid #C9A84C44;border-radius:6px;
-  color:#F5E6C8;padding:6px 8px;font-size:12px}
+input,select{font-family:inherit;background:#231808;border:1px solid #C9A84C44;border-radius:6px;color:#F5E6C8;padding:6px 8px;font-size:12px}
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-thumb{background:#C9A84C44;border-radius:2px}
 .fade{animation:fd .2s ease}
@@ -37,152 +35,113 @@ function useLS(k,d){
   return[v,(x)=>{const n=typeof x==="function"?x(v):x;sv(n);lsS(k,n);}];
 }
 
-// Default product catalog with cost basis for profit calc
-const PRODUCT_DEFAULTS = {
-  // ── JOURNALS & PLANNERS (Digital) ──
-  "Autumn Reading Journal (digital)":            {price:8.99,  cost:0,    type:"digital"},
-  "Autumn TBR Journal (digital)":                {price:7.99,  cost:0,    type:"digital"},
-  "Weekly Planner (digital)":                    {price:9.99,  cost:0,    type:"digital"},
-  "Self-Reflection Journal (digital)":           {price:8.99,  cost:0,    type:"digital"},
-  "Morning Reflection Journal (digital)":        {price:9.99,  cost:0,    type:"digital"},
-  "Scholar\'s Daily Reading 60-Day (digital)":  {price:4.99,  cost:0,    type:"digital"},
-  "Reading Challenge (digital)":                 {price:6.99,  cost:0,    type:"digital"},
-  "Commonplace Book (digital)":                  {price:18.99, cost:0,    type:"digital"},
-  "Classicist\'s Reading Journal (digital+stickers)":{price:13.99,cost:0,type:"digital"},
-  // ── JOURNALS & PLANNERS (Physical) ──
-  "Autumn Reading Journal (physical)":           {price:24.99, cost:6.10, type:"physical"},
-  "Autumn TBR Journal (physical)":               {price:19.99, cost:3.89, type:"physical"},
-  "Weekly Planner (physical)":                   {price:24.99, cost:6.63, type:"physical"},
-  "Self-Reflection Journal (physical)":          {price:22.99, cost:13.66,type:"physical"},
-  "Morning Reflection Journal (physical)":       {price:22.99, cost:6.01, type:"physical"},
-  "Scholar\'s Daily Reading 60-Day (physical)": {price:27.99, cost:6.50, type:"physical"},
-  "Reading Challenge (physical)":                {price:24.99, cost:4.51, type:"physical"},
-  "Commonplace Book (physical)":                 {price:44.99, cost:15.28,type:"physical"},
-  "Classicist\'s Reading Journal (physical)":   {price:24.99, cost:6.41, type:"physical"},
-  "Classicist\'s Companion (physical)":         {price:34.99, cost:17.31,type:"physical"},
-  // ── LANGUAGE SERIES (Digital) ──
-  "Ancient Scholar Hebrew Journal (digital)":    {price:9.99,  cost:0,    type:"digital"},
-  "Ancient Scholar Greek Journal (digital)":     {price:9.99,  cost:0,    type:"digital"},
-  "Ancient Scholar Old English Journal (digital)":{price:9.99, cost:0,    type:"digital"},
-  "Ancient Scholar Aramaic Journal (digital)":   {price:9.99,  cost:0,    type:"digital"},
-  "Contemplative Scholar\'s Journal (digital)": {price:9.99,  cost:0,    type:"digital"},
-  "Language Notecards Set of 8 (digital)":       {price:4.99,  cost:0,    type:"digital"},
-  // ── LANGUAGE SERIES (Physical) ──
-  "Ancient Scholar Hebrew Journal (physical)":   {price:22.99, cost:6.01, type:"physical"},
-  "Ancient Scholar Greek Journal (physical)":    {price:22.99, cost:6.01, type:"physical"},
+const PRODUCT_DEFAULTS={
+  "Autumn Reading Journal (digital)":{price:8.99,cost:0,type:"digital"},
+  "Autumn TBR Journal (digital)":{price:7.99,cost:0,type:"digital"},
+  "Weekly Planner (digital)":{price:9.99,cost:0,type:"digital"},
+  "Self-Reflection Journal (digital)":{price:8.99,cost:0,type:"digital"},
+  "Morning Reflection Journal (digital)":{price:9.99,cost:0,type:"digital"},
+  "Scholar's Daily Reading 60-Day (digital)":{price:4.99,cost:0,type:"digital"},
+  "Reading Challenge (digital)":{price:6.99,cost:0,type:"digital"},
+  "Commonplace Book (digital)":{price:18.99,cost:0,type:"digital"},
+  "Classicist's Reading Journal (digital+stickers)":{price:13.99,cost:0,type:"digital"},
+  "Autumn Reading Journal (physical)":{price:24.99,cost:6.10,type:"physical"},
+  "Autumn TBR Journal (physical)":{price:19.99,cost:3.89,type:"physical"},
+  "Weekly Planner (physical)":{price:24.99,cost:6.63,type:"physical"},
+  "Self-Reflection Journal (physical)":{price:22.99,cost:13.66,type:"physical"},
+  "Morning Reflection Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
+  "Scholar's Daily Reading 60-Day (physical)":{price:27.99,cost:6.50,type:"physical"},
+  "Reading Challenge (physical)":{price:24.99,cost:4.51,type:"physical"},
+  "Commonplace Book (physical)":{price:44.99,cost:15.28,type:"physical"},
+  "Classicist's Reading Journal (physical)":{price:24.99,cost:6.41,type:"physical"},
+  "Classicist's Companion (physical)":{price:34.99,cost:17.31,type:"physical"},
+  "Ancient Scholar Hebrew Journal (digital)":{price:9.99,cost:0,type:"digital"},
+  "Ancient Scholar Greek Journal (digital)":{price:9.99,cost:0,type:"digital"},
+  "Ancient Scholar Old English Journal (digital)":{price:9.99,cost:0,type:"digital"},
+  "Ancient Scholar Aramaic Journal (digital)":{price:9.99,cost:0,type:"digital"},
+  "Contemplative Scholar's Journal (digital)":{price:9.99,cost:0,type:"digital"},
+  "Language Notecards Set of 8 (digital)":{price:4.99,cost:0,type:"digital"},
+  "Ancient Scholar Hebrew Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
+  "Ancient Scholar Greek Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
   "Ancient Scholar Old English Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
-  // ── WALL ART & PRINTS ──
-  "Latin Quote Art (each)":                      {price:3.49,  cost:0,    type:"digital"},
-  "Latin Quote Art Bundle Vol I":                {price:10.99, cost:0,    type:"digital"},
-  "Latin Quote Art Bundle Vol II":               {price:6.99,  cost:0,    type:"digital"},
-  "Latin Quote Art Complete Collection":         {price:10.99, cost:0,    type:"digital"},
-  "Botanical Print (each)":                      {price:3.49,  cost:0,    type:"digital"},
-  "Botanical Print Bundle":                      {price:6.99,  cost:0,    type:"digital"},
-  // ── STATIONERY ──
-  "Sticker Sheet Vol I":                         {price:7.99,  cost:0,    type:"digital"},
-  "Sticker Sheet Vol II":                        {price:7.99,  cost:0,    type:"digital"},
-  "Sticker Bundle (Vol I+II)":                   {price:12.99, cost:0,    type:"digital"},
-  "Reading Log Single Page":                     {price:2.99,  cost:0,    type:"digital"},
-  "Daily Notepad":                               {price:2.99,  cost:0,    type:"digital"},
-  "Book Club Kit":                               {price:9.99,  cost:0,    type:"digital"},
-  // ── BOOKMARKS (Physical — handmade) ──
-  "Bookmark Set I — Autumn Scholar":             {price:12.99, cost:2.97, type:"physical"},
-  "Bookmark Set II — Literary Parchment":        {price:12.99, cost:2.97, type:"physical"},
-  "Bookmark Set III — Autumn Vol II":            {price:12.99, cost:2.97, type:"physical"},
-  "Bookmark Set IV — Winter Vol I":              {price:12.99, cost:2.97, type:"physical"},
-  "Bookmark Set V — Advent":                     {price:12.99, cost:2.97, type:"physical"},
-  "Bookmark Set VI — Gift Edition":              {price:12.99, cost:2.97, type:"physical"},
-}
+  "Latin Quote Art (each)":{price:3.49,cost:0,type:"digital"},
+  "Latin Quote Art Bundle Vol I":{price:10.99,cost:0,type:"digital"},
+  "Latin Quote Art Bundle Vol II":{price:6.99,cost:0,type:"digital"},
+  "Latin Quote Art Complete Collection":{price:10.99,cost:0,type:"digital"},
+  "Botanical Print (each)":{price:3.49,cost:0,type:"digital"},
+  "Botanical Print Bundle":{price:6.99,cost:0,type:"digital"},
+  "Sticker Sheet Vol I":{price:7.99,cost:0,type:"digital"},
+  "Sticker Sheet Vol II":{price:7.99,cost:0,type:"digital"},
+  "Sticker Bundle (Vol I+II)":{price:12.99,cost:0,type:"digital"},
+  "Reading Log Single Page":{price:2.99,cost:0,type:"digital"},
+  "Daily Notepad":{price:2.99,cost:0,type:"digital"},
+  "Book Club Kit":{price:9.99,cost:0,type:"digital"},
+  "Bookmark Set I - Autumn Scholar":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set II - Literary Parchment":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set III - Autumn Vol II":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set IV - Winter Vol I":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set V - Advent":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set VI - Gift Edition":{price:12.99,cost:2.97,type:"physical"},
+};
+
+const EXPENSE_CATEGORIES=["Materials","Lulu Printing","Etsy Fees","Shopify","Shipping","Equipment","Marketing","Subscriptions","Domain & Hosting","Other"];
 
 function todayISO(){return new Date().toISOString().slice(0,10);}
 
 function ProgressBar({pct,col}){
   return React.createElement("div",{style:{height:6,background:"#F5E6C81a",borderRadius:3}},
-    React.createElement("div",{style:{height:"100%",borderRadius:3,background:col,
-      width:Math.min(100,Math.max(0,pct))+"%",transition:"width .4s"}}));
+    React.createElement("div",{style:{height:"100%",borderRadius:3,background:col,width:Math.min(100,Math.max(0,pct))+"%",transition:"width .4s"}}));
 }
 
 function Nav({tab,set}){
-  const tabs=[{id:"dash",ic:"📊",lb:"Dashboard"},{id:"income",ic:"💰",lb:"Income"},
-              {id:"expenses",ic:"🧾",lb:"Expenses"},{id:"products",ic:"📦",lb:"Products"},
-              {id:"goals",ic:"🎯",lb:"Goals"}];
-  return React.createElement("div",{style:{position:"sticky",top:0,zIndex:50,
-    background:"#1a1208ee",backdropFilter:"blur(8px)",borderBottom:"1px solid #C9A84C33",display:"flex"}},
-    tabs.map(t=>React.createElement("button",{key:t.id,onClick:()=>set(t.id),
-      style:{flex:1,padding:"10px 2px",fontSize:9,letterSpacing:.5,
-        color:tab===t.id?GOLD_LT:"#F5E6C866",
-        borderBottom:tab===t.id?`2px solid ${GOLD}`:"2px solid transparent",
-        transition:"all .2s",fontFamily:"Cinzel,Georgia,serif"}},
+  const tabs=[{id:"dash",ic:"📊",lb:"Dashboard"},{id:"income",ic:"💰",lb:"Income"},{id:"expenses",ic:"🧾",lb:"Expenses"},{id:"products",ic:"📦",lb:"Products"},{id:"goals",ic:"🎯",lb:"Goals"}];
+  return React.createElement("div",{style:{position:"sticky",top:0,zIndex:50,background:"#1a1208ee",backdropFilter:"blur(8px)",borderBottom:"1px solid #C9A84C33",display:"flex"}},
+    tabs.map(t=>React.createElement("button",{key:t.id,onClick:()=>set(t.id),style:{flex:1,padding:"10px 2px",fontSize:9,letterSpacing:.5,color:tab===t.id?GOLD_LT:"#F5E6C866",borderBottom:tab===t.id?"2px solid "+GOLD:"2px solid transparent",transition:"all .2s",fontFamily:"Cinzel,Georgia,serif"}},
       React.createElement("div",{style:{fontSize:14,marginBottom:1}},t.ic),t.lb))
   );
 }
 
-// ── DASHBOARD ──
 function Dashboard({income,expenses,goals}){
   const totalIncome=income.reduce((a,i)=>a+i.amount,0);
   const totalExpenses=expenses.reduce((a,e)=>a+e.amount,0);
   const net=totalIncome-totalExpenses;
-
   const now=new Date();
   const thisMonth=now.toISOString().slice(0,7);
   const monthIncome=income.filter(i=>i.date.startsWith(thisMonth)).reduce((a,i)=>a+i.amount,0);
   const monthExpenses=expenses.filter(e=>e.date.startsWith(thisMonth)).reduce((a,e)=>a+e.amount,0);
-
-  // By category
   const byCat={};
   expenses.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
   const catEntries=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
-
-  // By product
   const byProduct={};
   income.forEach(i=>{byProduct[i.product]=(byProduct[i.product]||0)+i.amount;});
   const prodEntries=Object.entries(byProduct).sort((a,b)=>b[1]-a[1]).slice(0,8);
-
   const goal=goals.monthlyTarget||0;
   const goalPct=goal>0?(monthIncome/goal)*100:0;
 
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
-    React.createElement("div",{style:{textAlign:"center",marginBottom:16,
-      borderBottom:"1px solid #C9A84C33",paddingBottom:12}},
+    React.createElement("div",{style:{textAlign:"center",marginBottom:16,borderBottom:"1px solid #C9A84C33",paddingBottom:12}},
       React.createElement("div",{style:{fontSize:8,letterSpacing:5,color:GOLD,textTransform:"uppercase"},className:"cz"},"TheCuratorsDesk"),
       React.createElement("div",{style:{fontSize:18,color:GOLD_LT,marginTop:3},className:"cz"},"Finances Dashboard")
     ),
-
-    // Big numbers
     React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}},
-      [{l:"Total Income",v:totalIncome,c:"#7aE499"},
-       {l:"Total Expenses",v:totalExpenses,c:"#E4977a"},
-       {l:"Net Profit",v:net,c:net>=0?"#7aE499":"#E4977a"},
-       {l:"This Month",v:monthIncome-monthExpenses,c:GOLD_LT}].map(s=>
-        React.createElement("div",{key:s.l,style:{background:"#231808",border:"1px solid #C9A84C22",
-          borderRadius:10,padding:"10px 12px"}},
-          React.createElement("div",{style:{fontSize:8,color:"#F5E6C866",letterSpacing:1,
-            textTransform:"uppercase",marginBottom:4},className:"cz"},s.l),
-          React.createElement("div",{style:{fontSize:18,fontWeight:"bold",color:s.c}},
-            "$"+s.v.toFixed(2))
+      [{l:"Total Income",v:totalIncome,c:"#7aE499"},{l:"Total Expenses",v:totalExpenses,c:"#E4977a"},{l:"Net Profit",v:net,c:net>=0?"#7aE499":"#E4977a"},{l:"This Month",v:monthIncome-monthExpenses,c:GOLD_LT}].map(s=>
+        React.createElement("div",{key:s.l,style:{background:"#231808",border:"1px solid #C9A84C22",borderRadius:10,padding:"10px 12px"}},
+          React.createElement("div",{style:{fontSize:8,color:"#F5E6C866",letterSpacing:1,textTransform:"uppercase",marginBottom:4},className:"cz"},s.l),
+          React.createElement("div",{style:{fontSize:18,fontWeight:"bold",color:s.c}},"$"+s.v.toFixed(2))
         )
       )
     ),
-
-    // Monthly goal
-    goal>0&&React.createElement("div",{style:{background:`${FOREST}33`,border:`1px solid ${GOLD}44`,
-      borderRadius:10,padding:"10px 12px",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:9,color:GOLD,letterSpacing:2,textTransform:"uppercase",
-        marginBottom:4},className:"cz"},"Monthly Income Goal"),
-      React.createElement("div",{style:{fontSize:11,color:GOLD_LT,marginBottom:6}},
-        "$"+monthIncome.toFixed(2)+" of $"+goal.toFixed(2)+" ("+goalPct.toFixed(0)+"%)"),
+    goal>0&&React.createElement("div",{style:{background:FOREST+"33",border:"1px solid "+GOLD+"44",borderRadius:10,padding:"10px 12px",marginBottom:14}},
+      React.createElement("div",{style:{fontSize:9,color:GOLD,letterSpacing:2,textTransform:"uppercase",marginBottom:4},className:"cz"},"Monthly Income Goal"),
+      React.createElement("div",{style:{fontSize:11,color:GOLD_LT,marginBottom:6}},"$"+monthIncome.toFixed(2)+" of $"+goal.toFixed(2)+" ("+goalPct.toFixed(0)+"%)"),
       React.createElement(ProgressBar,{pct:goalPct,col:GOLD})
     ),
-
-    // Top earning products
     prodEntries.length>0&&React.createElement("div",{style:{marginBottom:14}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Top Earning Products"),
+      React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Top Earning Products"),
       prodEntries.map(([name,amt],i)=>{
         const pct=totalIncome>0?(amt/totalIncome)*100:0;
         return React.createElement("div",{key:i,style:{marginBottom:8}},
-          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",
-            fontSize:11,color:PARCH,marginBottom:3}},
+          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",fontSize:11,color:PARCH,marginBottom:3}},
             React.createElement("span",null,name),
             React.createElement("span",{style:{color:GOLD_LT,fontWeight:"bold"}},"$"+amt.toFixed(2))
           ),
@@ -190,16 +149,12 @@ function Dashboard({income,expenses,goals}){
         );
       })
     ),
-
-    // Expense categories
     catEntries.length>0&&React.createElement("div",null,
-      React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Expenses by Category"),
+      React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Expenses by Category"),
       catEntries.map(([cat,amt],i)=>{
         const pct=totalExpenses>0?(amt/totalExpenses)*100:0;
         return React.createElement("div",{key:i,style:{marginBottom:8}},
-          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",
-            fontSize:11,color:PARCH,marginBottom:3}},
+          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",fontSize:11,color:PARCH,marginBottom:3}},
             React.createElement("span",null,cat),
             React.createElement("span",{style:{color:"#E4977a",fontWeight:"bold"}},"$"+amt.toFixed(2))
           ),
@@ -210,228 +165,160 @@ function Dashboard({income,expenses,goals}){
   );
 }
 
-// ── INCOME TAB ──
 function IncomeTab({income,setIncome}){
-  const[form,setForm]=useState({date:todayISO(),product:Object.keys(PRODUCT_DEFAULTS)[0],
-    amount:PRODUCT_DEFAULTS[Object.keys(PRODUCT_DEFAULTS)[0]].price,qty:1,note:""});
-
+  const[form,setForm]=useState({date:todayISO(),product:Object.keys(PRODUCT_DEFAULTS)[0],amount:PRODUCT_DEFAULTS[Object.keys(PRODUCT_DEFAULTS)[0]].price,qty:1,note:""});
   function addEntry(){
     const total=parseFloat(form.amount)*parseInt(form.qty||1);
     setIncome(prev=>[{...form,amount:total,id:Date.now()},...prev]);
     setForm({...form,note:""});
   }
-  function removeEntry(id){
-    setIncome(prev=>prev.filter(e=>e.id!==id));
-  }
+  function removeEntry(id){setIncome(prev=>prev.filter(e=>e.id!==id));}
   function updateProduct(name){
     const def=PRODUCT_DEFAULTS[name];
     setForm({...form,product:name,amount:def?def.price:0});
   }
-
   const total=income.reduce((a,i)=>a+i.amount,0);
-
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
     React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
       React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"💰 Income"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},
-        "Total: $"+total.toFixed(2)+" · "+income.length+" sales logged")
+      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},"Total: $"+total.toFixed(2)+" · "+income.length+" sales logged")
     ),
-
-    // Add entry form
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",
-      borderRadius:10,padding:"12px",marginBottom:16}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Log a Sale"),
+    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"12px",marginBottom:16}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Log a Sale"),
       React.createElement("div",{style:{display:"grid",gap:8}},
-        React.createElement("input",{type:"date",value:form.date,
-          onChange:e=>setForm({...form,date:e.target.value})}),
-        React.createElement("select",{value:form.product,
-          onChange:e=>updateProduct(e.target.value)},
+        React.createElement("input",{type:"date",value:form.date,onChange:e=>setForm({...form,date:e.target.value})}),
+        React.createElement("select",{value:form.product,onChange:e=>updateProduct(e.target.value)},
           Object.keys(PRODUCT_DEFAULTS).map(p=>React.createElement("option",{key:p,value:p},p)),
           React.createElement("option",{value:"Other"},"Other / Custom")
         ),
         React.createElement("div",{style:{display:"flex",gap:8}},
-          React.createElement("input",{type:"number",placeholder:"Price",step:"0.01",
-            value:form.amount,onChange:e=>setForm({...form,amount:e.target.value}),style:{flex:1}}),
-          React.createElement("input",{type:"number",placeholder:"Qty",min:"1",
-            value:form.qty,onChange:e=>setForm({...form,qty:e.target.value}),style:{width:60}})
+          React.createElement("input",{type:"number",placeholder:"Price",step:"0.01",value:form.amount,onChange:e=>setForm({...form,amount:e.target.value}),style:{flex:1}}),
+          React.createElement("input",{type:"number",placeholder:"Qty",min:"1",value:form.qty,onChange:e=>setForm({...form,qty:e.target.value}),style:{width:60}})
         ),
-        React.createElement("input",{type:"text",placeholder:"Note (optional)",
-          value:form.note,onChange:e=>setForm({...form,note:e.target.value})}),
-        React.createElement("button",{onClick:addEntry,
-          style:{background:FOREST,color:GOLD_LT,borderRadius:8,padding:"8px",
-            fontSize:12,fontFamily:"Cinzel,serif",fontWeight:"bold",border:`1px solid ${GOLD}44`}},
+        React.createElement("input",{type:"text",placeholder:"Note (optional)",value:form.note,onChange:e=>setForm({...form,note:e.target.value})}),
+        React.createElement("button",{onClick:addEntry,style:{background:FOREST,color:GOLD_LT,borderRadius:8,padding:"8px",fontSize:12,fontFamily:"Cinzel,serif",fontWeight:"bold",border:"1px solid "+GOLD+"44"}},
           "+ Add Sale")
       )
     ),
-
-    // Entries list
     React.createElement("div",null,
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Recent Sales"),
-      income.length===0&&React.createElement("div",{style:{textAlign:"center",
-        color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No sales logged yet"),
-      income.slice(0,50).map(e=>React.createElement("div",{key:e.id,
-        style:{background:"#231808",border:"1px solid #2D4A3E44",borderRadius:8,
-          padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Recent Sales"),
+      income.length===0&&React.createElement("div",{style:{textAlign:"center",color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No sales logged yet"),
+      income.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #2D4A3E44",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
         React.createElement("div",{style:{flex:1}},
-          React.createElement("div",{style:{fontSize:11,color:PARCH}},e.product+(e.qty>1?` ×${e.qty}`:"")),
-          React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},
-            e.date+(e.note?" · "+e.note:""))
+          React.createElement("div",{style:{fontSize:11,color:PARCH}},e.product+(e.qty>1?" x"+e.qty:"")),
+          React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},e.date+(e.note?" · "+e.note:""))
         ),
-        React.createElement("div",{style:{fontSize:13,fontWeight:"bold",color:"#7aE499"}},
-          "$"+e.amount.toFixed(2)),
-        React.createElement("button",{onClick:()=>removeEntry(e.id),
-          style:{color:"#E4977a",fontSize:14,padding:"0 4px"}},"×")
+        React.createElement("div",{style:{fontSize:13,fontWeight:"bold",color:"#7aE499"}},"$"+e.amount.toFixed(2)),
+        React.createElement("button",{onClick:()=>removeEntry(e.id),style:{color:"#E4977a",fontSize:14,padding:"0 4px"}},"x")
       ))
     )
   );
 }
 
-// ── EXPENSES TAB ──
-const EXPENSE_CATEGORIES=["Materials","Lulu Printing","Etsy Fees","Shopify","Shipping","Equipment","Marketing","Subscriptions","Domain & Hosting","Other"];
-
 function ExpensesTab({expenses,setExpenses}){
   const[form,setForm]=useState({date:todayISO(),category:EXPENSE_CATEGORIES[0],amount:"",note:""});
-
   function addEntry(){
     if(!form.amount)return;
     setExpenses(prev=>[{...form,amount:parseFloat(form.amount),id:Date.now()},...prev]);
     setForm({...form,amount:"",note:""});
   }
-  function removeEntry(id){
-    setExpenses(prev=>prev.filter(e=>e.id!==id));
-  }
-
+  function removeEntry(id){setExpenses(prev=>prev.filter(e=>e.id!==id));}
   const total=expenses.reduce((a,e)=>a+e.amount,0);
-
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
     React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"🧾 Expenses"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},
-        "Total: $"+total.toFixed(2)+" · "+expenses.length+" entries")
+      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"Expenses"),
+      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},"Total: $"+total.toFixed(2)+" · "+expenses.length+" entries")
     ),
-
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",
-      borderRadius:10,padding:"12px",marginBottom:16}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Log an Expense"),
+    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"12px",marginBottom:16}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Log an Expense"),
       React.createElement("div",{style:{display:"grid",gap:8}},
-        React.createElement("input",{type:"date",value:form.date,
-          onChange:e=>setForm({...form,date:e.target.value})}),
-        React.createElement("select",{value:form.category,
-          onChange:e=>setForm({...form,category:e.target.value})},
+        React.createElement("input",{type:"date",value:form.date,onChange:e=>setForm({...form,date:e.target.value})}),
+        React.createElement("select",{value:form.category,onChange:e=>setForm({...form,category:e.target.value})},
           EXPENSE_CATEGORIES.map(c=>React.createElement("option",{key:c,value:c},c))
         ),
-        React.createElement("input",{type:"number",placeholder:"Amount",step:"0.01",
-          value:form.amount,onChange:e=>setForm({...form,amount:e.target.value})}),
-        React.createElement("input",{type:"text",placeholder:"Note (e.g. cardstock + pouches)",
-          value:form.note,onChange:e=>setForm({...form,note:e.target.value})}),
-        React.createElement("button",{onClick:addEntry,
-          style:{background:BURG,color:GOLD_LT,borderRadius:8,padding:"8px",
-            fontSize:12,fontFamily:"Cinzel,serif",fontWeight:"bold",border:`1px solid ${GOLD}44`}},
+        React.createElement("input",{type:"number",placeholder:"Amount",step:"0.01",value:form.amount,onChange:e=>setForm({...form,amount:e.target.value})}),
+        React.createElement("input",{type:"text",placeholder:"Note (e.g. cardstock + pouches)",value:form.note,onChange:e=>setForm({...form,note:e.target.value})}),
+        React.createElement("button",{onClick:addEntry,style:{background:BURG,color:GOLD_LT,borderRadius:8,padding:"8px",fontSize:12,fontFamily:"Cinzel,serif",fontWeight:"bold",border:"1px solid "+GOLD+"44"}},
           "+ Add Expense")
       )
     ),
-
     React.createElement("div",null,
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Recent Expenses"),
-      expenses.length===0&&React.createElement("div",{style:{textAlign:"center",
-        color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No expenses logged yet"),
-      expenses.slice(0,50).map(e=>React.createElement("div",{key:e.id,
-        style:{background:"#231808",border:"1px solid #6B273744",borderRadius:8,
-          padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Recent Expenses"),
+      expenses.length===0&&React.createElement("div",{style:{textAlign:"center",color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No expenses logged yet"),
+      expenses.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #6B273744",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
         React.createElement("div",{style:{flex:1}},
           React.createElement("div",{style:{fontSize:11,color:PARCH}},e.category),
-          React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},
-            e.date+(e.note?" · "+e.note:""))
+          React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},e.date+(e.note?" · "+e.note:""))
         ),
-        React.createElement("div",{style:{fontSize:13,fontWeight:"bold",color:"#E4977a"}},
-          "$"+e.amount.toFixed(2)),
-        React.createElement("button",{onClick:()=>removeEntry(e.id),
-          style:{color:"#E4977a",fontSize:14,padding:"0 4px"}},"×")
+        React.createElement("div",{style:{fontSize:13,fontWeight:"bold",color:"#E4977a"}},"$"+e.amount.toFixed(2)),
+        React.createElement("button",{onClick:()=>removeEntry(e.id),style:{color:"#E4977a",fontSize:14,padding:"0 4px"}},"x")
       ))
     )
   );
 }
 
-// ── PRODUCTS TAB — profit per product ──
 function ProductsTab(){
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
     React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"📦 Product Profitability"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},
-        "Reference costs used for profit calculations")
+      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"Product Profitability"),
+      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},"Profit shown at Shopify rate (2.9% + $0.30)")
     ),
     Object.entries(PRODUCT_DEFAULTS).map(([name,d])=>{
-      const etsyFee=d.price*0.065+0.20;
       const shopifyFee=d.price*0.029+0.30;
+      const etsyFee=d.price*0.065+0.20;
       const fulfillCost=d.type==="physical"?7.50:0;
-      const profitEtsy=d.price-d.cost-etsyFee-fulfillCost;
       const profitShopify=d.price-d.cost-shopifyFee-fulfillCost;
+      const profitEtsy=d.price-d.cost-etsyFee-fulfillCost;
       const margin=(profitShopify/d.price)*100;
-      const profit=profitShopify;
-      return React.createElement("div",{key:name,style:{background:"#231808",
-        border:"1px solid #C9A84C22",borderRadius:10,padding:"10px 12px",marginBottom:6}},
-        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",
-          marginBottom:6}},
-          React.createElement("span",{style:{fontSize:12,color:GOLD_LT,fontWeight:"bold"}},name),
-          React.createElement("span",{className:"chip",
-            style:{background:d.type==="digital"?"#1e3a5a":"#3a1e2a",
-              color:d.type==="digital"?"#7ab8e8":"#e87ab8",
-              border:`1px solid ${d.type==="digital"?"#7ab8e8":"#e87ab8"}33`}},d.type)
+      return React.createElement("div",{key:name,style:{background:"#231808",border:"1px solid #C9A84C22",borderRadius:10,padding:"10px 12px",marginBottom:6}},
+        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:6}},
+          React.createElement("span",{style:{fontSize:11,color:GOLD_LT,fontWeight:"bold"}},name),
+          React.createElement("span",{className:"chip",style:{background:d.type==="digital"?"#1e3a5a":"#3a1e2a",color:d.type==="digital"?"#7ab8e8":"#e87ab8",border:"1px solid "+(d.type==="digital"?"#7ab8e8":"#e87ab8")+"33"}},d.type)
         ),
-        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",
-          gap:6,fontSize:10}},
+        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:4,fontSize:10}},
           React.createElement("div",null,
             React.createElement("div",{style:{color:"#F5E6C855"}},"Price"),
             React.createElement("div",{style:{color:PARCH,fontWeight:"bold"}},"$"+d.price.toFixed(2))
           ),
           React.createElement("div",null,
-            React.createElement("div",{style:{color:"#F5E6C855"}},"Cost+Fees"),
-            React.createElement("div",{style:{color:"#E4977a",fontWeight:"bold"}},"$"+(d.cost+etsyFee).toFixed(2))
+            React.createElement("div",{style:{color:"#F5E6C855"}},"Cost"),
+            React.createElement("div",{style:{color:"#E4977a"}},"$"+(d.cost+fulfillCost).toFixed(2))
           ),
           React.createElement("div",null,
-            React.createElement("div",{style:{color:"#F5E6C855"}},"Profit"),
-            React.createElement("div",{style:{color:"#7aE499",fontWeight:"bold"}},
-              "$"+profit.toFixed(2)+" ("+margin.toFixed(0)+"%)")
+            React.createElement("div",{style:{color:"#F5E6C855"}},"Shopify"),
+            React.createElement("div",{style:{color:"#7aE499",fontWeight:"bold"}},"$"+profitShopify.toFixed(2))
+          ),
+          React.createElement("div",null,
+            React.createElement("div",{style:{color:"#F5E6C855"}},"Etsy"),
+            React.createElement("div",{style:{color:"#A8B8C8"}},"$"+profitEtsy.toFixed(2))
           )
         )
       );
     }),
-    React.createElement("div",{style:{fontSize:10,color:"#F5E6C855",fontStyle:"italic",
-      marginTop:10,textAlign:"center"}},
-      "Fees estimated at Etsy 6.5% + $0.20 · Shopify 2.9% + $0.30. Physical cost includes Lulu print + $7.50 packaging/shipping. Bookmark physical cost = ink + cardstock + pouches + ribbon + packaging.")
+    React.createElement("div",{style:{fontSize:10,color:"#F5E6C855",fontStyle:"italic",marginTop:10,textAlign:"center"}},
+      "Physical cost includes Lulu print + $7.50 packaging/shipping. Bookmark cost = materials only.")
   );
 }
 
-// ── GOALS TAB ──
 function GoalsTab({goals,setGoals}){
   return React.createElement("div",{style:{padding:"14px"},className:"fade"},
     React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"🎯 Goals"),
+      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"Goals")
     ),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",
-      borderRadius:10,padding:"14px",marginBottom:12}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Monthly Income Goal"),
-      React.createElement("input",{type:"number",placeholder:"e.g. 200",
-        value:goals.monthlyTarget||"",
-        onChange:e=>setGoals({...goals,monthlyTarget:parseFloat(e.target.value)||0}),
-        style:{width:"100%",fontSize:16}}),
-      React.createElement("div",{style:{fontSize:10,color:"#F5E6C855",marginTop:6}},
-        "Tracked against actual income on the Dashboard")
+    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"14px",marginBottom:12}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Monthly Income Goal"),
+      React.createElement("input",{type:"number",placeholder:"e.g. 200",value:goals.monthlyTarget||"",onChange:e=>setGoals({...goals,monthlyTarget:parseFloat(e.target.value)||0}),style:{width:"100%",fontSize:16}}),
+      React.createElement("div",{style:{fontSize:10,color:"#F5E6C855",marginTop:6}},"Tracked against actual income on the Dashboard")
     ),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",
-      borderRadius:10,padding:"14px"}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,
-        textTransform:"uppercase",marginBottom:8},className:"cz"},"Equipment Payback Tracker"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6}},
-        "HP 64XL ink cartridge ~$68.98 → prints ~24 bookmark sets. At $7.11 profit/set (Shopify rate) = $170.64 gross profit per cartridge. Break even on ink after "),
-      React.createElement("span",{style:{color:GOLD_LT,fontWeight:"bold"}},"10 sets sold."),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6,marginTop:8}},
-        "Shopify subscription: $1/mo × 3 months = $3 trial. After trial: $39/mo. Break even on subscription at ~5–6 sales/month.")
+    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"14px",marginBottom:12}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Bookmark Break-Even"),
+      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6}},"HP 64XL ink ~$68.98 prints ~24 sets. At $7.11 profit/set (Shopify) = $170 gross per cartridge."),
+      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,fontWeight:"bold",marginTop:4}},"Break even after 10 sets sold.")
+    ),
+    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"14px"}},
+      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Shopify Subscription"),
+      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6}},"$1/mo x 3 months = $3 trial. After trial: $39/mo."),
+      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,fontWeight:"bold",marginTop:4}},"Break even at ~5-6 sales per month.")
     )
   );
 }
@@ -441,22 +328,17 @@ function App(){
   const[income,setIncome]=useLS("tcd_income",[]);
   const[expenses,setExpenses]=useLS("tcd_expenses",[]);
   const[goals,setGoals]=useLS("tcd_goals",{monthlyTarget:0});
-
-  return React.createElement("div",{style:{maxWidth:520,margin:"0 auto",
-    minHeight:"100vh",background:"#1a1208",paddingBottom:28}},
-    React.createElement("div",{style:{background:`linear-gradient(to bottom,${BURG},${DARK})`,
-      padding:"16px 16px 12px",textAlign:"center",borderBottom:"1px solid #C9A84C33"}},
-      React.createElement("div",{style:{fontSize:8,letterSpacing:6,color:GOLD,
-        textTransform:"uppercase"},className:"cz"},"TheCuratorsDesk"),
-      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,marginTop:2,
-        letterSpacing:1},className:"cz"},"Finances")
+  return React.createElement("div",{style:{maxWidth:520,margin:"0 auto",minHeight:"100vh",background:"#1a1208",paddingBottom:28}},
+    React.createElement("div",{style:{background:"linear-gradient(to bottom,"+BURG+","+DARK+")",padding:"16px 16px 12px",textAlign:"center",borderBottom:"1px solid #C9A84C33"}},
+      React.createElement("div",{style:{fontSize:8,letterSpacing:6,color:GOLD,textTransform:"uppercase"},className:"cz"},"TheCuratorsDesk"),
+      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,marginTop:2,letterSpacing:1},className:"cz"},"Finances")
     ),
     React.createElement(Nav,{tab,set:setTab}),
-    tab==="dash"     &&React.createElement(Dashboard,{income,expenses,goals}),
-    tab==="income"   &&React.createElement(IncomeTab,{income,setIncome}),
-    tab==="expenses" &&React.createElement(ExpensesTab,{expenses,setExpenses}),
-    tab==="products" &&React.createElement(ProductsTab),
-    tab==="goals"    &&React.createElement(GoalsTab,{goals,setGoals}),
+    tab==="dash"&&React.createElement(Dashboard,{income,expenses,goals}),
+    tab==="income"&&React.createElement(IncomeTab,{income,setIncome}),
+    tab==="expenses"&&React.createElement(ExpensesTab,{expenses,setExpenses}),
+    tab==="products"&&React.createElement(ProductsTab),
+    tab==="goals"&&React.createElement(GoalsTab,{goals,setGoals})
   );
 }
 
@@ -464,4 +346,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(
 </script>
 </body>
 </html>
- 

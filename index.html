@@ -2,62 +2,220 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="TCD Finances">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>TCD Finances</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#1a1208;font-family:"Cormorant Garamond",Georgia,serif;color:#F5E6C8;overflow-x:hidden}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1208;font-family:Georgia,serif;color:#F5E6C8;max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:40px}
 .cz{font-family:"Cinzel",Georgia,serif}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,select{font-family:inherit;background:#231808;border:1px solid #C9A84C44;border-radius:6px;color:#F5E6C8;padding:6px 8px;font-size:12px}
-::-webkit-scrollbar{width:3px;height:3px}
-::-webkit-scrollbar-thumb{background:#C9A84C44;border-radius:2px}
-.fade{animation:fd .2s ease}
+input,select,button{font-family:inherit}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#C9A84C44;border-radius:2px}
+/* NAV */
+#nav{position:sticky;top:0;background:#1a1208ee;backdrop-filter:blur(8px);border-bottom:1px solid #C9A84C33;display:flex;z-index:99}
+.ntab{flex:1;padding:10px 2px;font-size:9px;letter-spacing:.5px;color:#F5E6C866;border:none;border-bottom:2px solid transparent;background:none;cursor:pointer;font-family:"Cinzel",Georgia,serif;transition:all .2s}
+.ntab.on{color:#E4C977;border-bottom:2px solid #C9A84C}
+/* HEADER */
+#hdr{background:linear-gradient(to bottom,#6B2737,#1a1208);padding:16px 16px 12px;text-align:center;border-bottom:1px solid #C9A84C33}
+/* TABS */
+.tab{display:none;padding:14px;animation:fd .2s ease}
+.tab.on{display:block}
 @keyframes fd{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.chip{display:inline-flex;align-items:center;border-radius:10px;font-size:8px;padding:2px 7px;font-family:"Cinzel",Georgia,serif;letter-spacing:.4px;font-weight:600;white-space:nowrap}
+/* CARDS */
+.card{background:#231808;border:1px solid #C9A84C22;border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.card.hi{border-color:#C9A84C55}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px}
+/* LABELS */
+.lbl{font-size:8px;color:#F5E6C855;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;font-family:"Cinzel",Georgia,serif}
+.val{font-size:18px;font-weight:bold}
+.val.g{color:#7aE499}.val.r{color:#E4977a}.val.y{color:#E4C977}.val.s{color:#A8C8A8}
+/* INPUTS */
+input[type=number],input[type=text],input[type=date],select{
+  width:100%;background:#231808;border:1px solid #C9A84C44;border-radius:6px;
+  color:#F5E6C8;padding:6px 8px;font-size:12px;margin-bottom:0}
+input.price{background:#2D1F0A;border-color:#C9A84C55;font-size:15px;font-weight:bold;color:#E4C977;padding:5px 8px}
+input.cost{background:#2D1F0A;border-color:#E4977a44;font-size:15px;color:#E4977a;padding:5px 8px}
+/* BUTTONS */
+.btn{width:100%;padding:8px;border-radius:8px;font-size:12px;font-family:"Cinzel",Georgia,serif;font-weight:bold;cursor:pointer;border:none}
+.btn.g{background:#2D4A3E;color:#E4C977;border:1px solid #C9A84C44}
+.btn.r{background:#6B2737;color:#E4C977;border:1px solid #C9A84C44}
+.btn.sm{font-size:8px;padding:2px 6px;border-radius:4px;background:#C9A84C22;color:#F5E6C866;border:1px solid #C9A84C33;width:auto;cursor:pointer}
+/* CHIPS */
+.chip{display:inline-flex;align-items:center;border-radius:10px;font-size:8px;padding:2px 7px;font-family:"Cinzel",Georgia,serif;letter-spacing:.4px;font-weight:600}
+.chip.d{background:#1e3a5a;color:#7ab8e8;border:1px solid #7ab8e833}
+.chip.p{background:#3a1e2a;color:#e87ab8;border:1px solid #e87ab833}
+/* BARS */
+.bar-bg{height:6px;background:#F5E6C81a;border-radius:3px;margin-top:4px}
+.bar-fill{height:100%;border-radius:3px;transition:width .4s}
+/* ROWS */
+.row{background:#231808;border-radius:8px;padding:8px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.row.income{border:1px solid #2D4A3E88}
+.row.expense{border:1px solid #6B273744}
+.del{color:#E4977a;font-size:14px;padding:0 4px;background:none;border:none;cursor:pointer}
+.note{font-size:9px;color:#F5E6C855;margin-top:2px}
+/* SECTION HEADS */
+.sh{font-size:9px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase;margin-bottom:8px;font-family:"Cinzel",Georgia,serif}
+/* RESULT ROW */
+.res{background:#1a1208;border-radius:6px;padding:8px 10px}
+/* FILTER */
+.filters{display:flex;gap:6px;margin-bottom:12px}
+.filt{flex:1;padding:7px;font-size:9px;border-radius:6px;letter-spacing:1px;font-family:"Cinzel",Georgia,serif;background:#231808;color:#F5E6C866;border:1px solid #C9A84C22;cursor:pointer}
+.filt.on{background:#C9A84C33;color:#E4C977;border-color:#C9A84C66}
 </style>
 </head>
 <body>
-<div id="root"></div>
+
+<div id="hdr">
+  <div style="font-size:8px;letter-spacing:6px;color:#C9A84C;text-transform:uppercase" class="cz">TheCuratorsDesk</div>
+  <div style="font-size:13px;color:#E4C977;margin-top:2px;letter-spacing:1px" class="cz">Finances</div>
+</div>
+
+<div id="nav">
+  <button class="ntab on" onclick="show('dash',this)">Dashboard</button>
+  <button class="ntab" onclick="show('income',this)">Income</button>
+  <button class="ntab" onclick="show('expenses',this)">Expenses</button>
+  <button class="ntab" onclick="show('products',this)">Products</button>
+  <button class="ntab" onclick="show('goals',this)">Goals</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="tab on">
+  <div class="grid2" style="margin-bottom:14px" id="dash-stats"></div>
+  <div id="dash-goal" style="display:none;margin-bottom:14px"></div>
+  <div id="dash-products" style="margin-bottom:14px"></div>
+  <div id="dash-cats"></div>
+</div>
+
+<!-- INCOME -->
+<div id="income" class="tab">
+  <div style="text-align:center;margin-bottom:14px">
+    <div style="font-size:18px;color:#E4C977" class="cz">Income</div>
+    <div id="income-total" style="font-size:11px;color:#F5E6C866;margin-top:4px"></div>
+  </div>
+  <div class="card" style="border-color:#C9A84C33;margin-bottom:16px">
+    <div class="sh">Log a Sale</div>
+    <div style="display:grid;gap:8px">
+      <input type="date" id="inc-date">
+      <select id="inc-product" style="font-size:11px"></select>
+      <div class="grid2">
+        <div><div class="lbl">Amount ($)</div><input type="number" id="inc-amount" step="0.01"></div>
+        <div><div class="lbl">Qty</div><input type="number" id="inc-qty" value="1" min="1"></div>
+      </div>
+      <input type="text" id="inc-note" placeholder="Note (optional)">
+      <button class="btn g" onclick="addIncome()">+ Log Sale</button>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div class="sh" style="margin:0">Sales History</div>
+    <select id="inc-sort" onchange="renderIncome()" style="font-size:10px;padding:4px 6px;width:auto">
+      <option value="date-desc">Newest first</option>
+      <option value="date-asc">Oldest first</option>
+      <option value="amount-desc">Amount high-low</option>
+      <option value="amount-asc">Amount low-high</option>
+    </select>
+  </div>
+  <div id="income-list"></div>
+</div>
+
+<!-- EXPENSES -->
+<div id="expenses" class="tab">
+  <div style="text-align:center;margin-bottom:14px">
+    <div style="font-size:18px;color:#E4C977" class="cz">Expenses</div>
+    <div id="exp-total" style="font-size:11px;color:#F5E6C866;margin-top:4px"></div>
+  </div>
+  <div class="card" style="border-color:#C9A84C33;margin-bottom:16px">
+    <div class="sh">Log an Expense</div>
+    <div style="display:grid;gap:8px">
+      <input type="date" id="exp-date">
+      <select id="exp-cat" style="font-size:11px">
+        <option>Materials</option><option>Lulu Printing</option><option>Etsy Fees</option>
+        <option>Shopify</option><option>Shipping</option><option>Equipment</option>
+        <option>Marketing</option><option>Subscriptions</option><option>Domain & Hosting</option><option>Other</option>
+      </select>
+      <input type="number" id="exp-amount" step="0.01" placeholder="Amount">
+      <input type="text" id="exp-note" placeholder="Note (optional)">
+      <button class="btn r" onclick="addExpense()">+ Add Expense</button>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div class="sh" style="margin:0">Expenses</div>
+    <select id="exp-sort" onchange="renderExpenses()" style="font-size:10px;padding:4px 6px;width:auto">
+      <option value="date-desc">Newest first</option>
+      <option value="date-asc">Oldest first</option>
+      <option value="amount-desc">Amount high-low</option>
+      <option value="amount-asc">Amount low-high</option>
+      <option value="category">Category A-Z</option>
+    </select>
+  </div>
+  <div id="expense-list"></div>
+</div>
+
+<!-- PRODUCTS -->
+<div id="products" class="tab">
+  <div style="text-align:center;margin-bottom:12px">
+    <div style="font-size:18px;color:#E4C977" class="cz">Product Profitability</div>
+    <div style="font-size:9px;color:#F5E6C866;margin-top:4px;line-height:1.8">
+      Shopify: 2.9% + $0.30 &nbsp;|&nbsp; Etsy: 9.5% + $0.45<br>Physical fulfillment: $7.50
+    </div>
+  </div>
+  <div class="filters">
+    <button class="filt on" onclick="filterProds('all',this)">All</button>
+    <button class="filt" onclick="filterProds('digital',this)">Digital</button>
+    <button class="filt" onclick="filterProds('physical',this)">Physical</button>
+  </div>
+  <div id="product-list"></div>
+  <div style="font-size:9px;color:#F5E6C855;font-style:italic;margin-top:14px;text-align:center;line-height:1.8">
+    Changes save automatically.<br>Tap reset to restore original values.
+  </div>
+</div>
+
+<!-- GOALS -->
+<div id="goals" class="tab">
+  <div style="text-align:center;margin-bottom:14px">
+    <div style="font-size:18px;color:#E4C977" class="cz">Goals</div>
+  </div>
+  <div class="card" style="border-color:#C9A84C33;margin-bottom:12px">
+    <div class="sh">Monthly Income Goal</div>
+    <input type="number" id="goal-target" placeholder="e.g. 200" style="font-size:16px" oninput="saveGoal()">
+    <div style="font-size:10px;color:#F5E6C855;margin-top:6px">Tracked on Dashboard</div>
+  </div>
+  <div class="card" style="border-color:#C9A84C33;margin-bottom:12px">
+    <div class="sh">Bookmark Break-Even</div>
+    <div style="font-size:11px;color:#F5E6C8aa;line-height:1.6">HP 64XL ink ~$68.98 prints ~24 sets. At $7.11 profit/set (Shopify) = $170 gross per cartridge.</div>
+    <div style="font-size:13px;color:#E4C977;font-weight:bold;margin-top:4px">Break even after 10 sets sold.</div>
+  </div>
+  <div class="card" style="border-color:#C9A84C33">
+    <div class="sh">Shopify Subscription</div>
+    <div style="font-size:11px;color:#F5E6C8aa;line-height:1.6">$1/mo x 3 months trial. After trial: $39/mo.</div>
+    <div style="font-size:13px;color:#E4C977;font-weight:bold;margin-top:4px">Break even at ~5-6 sales per month.</div>
+  </div>
+</div>
+
 <script>
-const{useState}=React;
-const FOREST="#2D4A3E",GOLD="#C9A84C",GOLD_LT="#E4C977",PARCH="#F5E6C8",BURG="#6B2737",DARK="#1a1208";
+// ── STORAGE ──
+function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
-const ls=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
-const lsS=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-function useLS(k,d){
-  const[v,sv]=useState(()=>ls(k,d));
-  return[v,(x)=>{const n=typeof x==="function"?x(v):x;sv(n);lsS(k,n);}];
-}
-
-const PRODUCT_DEFAULTS={
-  // ── STICKER SHEETS ──
+// ── PRODUCT DEFAULTS ──
+var DEFAULTS={
   "Sticker Sheet Vol. I (digital)":{price:4.99,cost:0,type:"digital"},
   "Sticker Sheet Vol. II (digital)":{price:4.99,cost:0,type:"digital"},
   "Sticker Sheet Bundle Vol. I+II (digital)":{price:7.99,cost:0,type:"digital"},
-  // ── WALL ART VOL I ──
   "Wall Art - Veritas Lux Mea (digital)":{price:3.99,cost:0,type:"digital"},
   "Wall Art - Per Aspera Ad Astra (digital)":{price:3.99,cost:0,type:"digital"},
   "Wall Art - Ars Longa Vita Brevis (digital)":{price:3.99,cost:0,type:"digital"},
   "Wall Art Vol. I Bundle - 3 prints (digital)":{price:8.99,cost:0,type:"digital"},
-  // ── LATIN QUOTE ART ──
   "Latin Quote Art Vol. I - each (digital)":{price:3.99,cost:0,type:"digital"},
   "Latin Quote Art Vol. I - Bundle (digital)":{price:8.99,cost:0,type:"digital"},
   "Latin Quote Art Vol. II - each (digital)":{price:3.99,cost:0,type:"digital"},
   "Latin Quote Art Vol. II - Bundle (digital)":{price:8.99,cost:0,type:"digital"},
   "Latin Quote Art Vol. III - each (digital)":{price:3.99,cost:0,type:"digital"},
   "Latin Quote Art Vol. III - Bundle (digital)":{price:8.99,cost:0,type:"digital"},
-  // ── BOTANICAL PRINTS ──
   "Botanical Prints Vol. I - Oak (digital)":{price:4.99,cost:0,type:"digital"},
   "Botanical Prints Vol. I - Rosemary (digital)":{price:4.99,cost:0,type:"digital"},
   "Botanical Prints Vol. I - Laurel (digital)":{price:4.99,cost:0,type:"digital"},
   "Botanical Prints Vol. I - Bundle (digital)":{price:9.99,cost:0,type:"digital"},
-  // ── DIGITAL PLANNERS & JOURNALS ──
   "Scholar's Daily Notepad (digital)":{price:3.99,cost:0,type:"digital"},
   "Scholar's Daily Reading Log (digital)":{price:7.99,cost:0,type:"digital"},
   "Scholar's Habit Tracker (digital)":{price:2.99,cost:0,type:"digital"},
@@ -73,7 +231,6 @@ const PRODUCT_DEFAULTS={
   "Self-Reflection Journal (digital)":{price:8.99,cost:0,type:"digital"},
   "Morning Reflection Journal (digital)":{price:9.99,cost:0,type:"digital"},
   "Scholar's Year in Letters (digital)":{price:12.99,cost:0,type:"digital"},
-  // ── PHYSICAL BOOKS ──
   "Classicist's Companion (physical)":{price:39.99,cost:17.31,type:"physical"},
   "Classicist's Reading Journal (physical)":{price:24.99,cost:6.41,type:"physical"},
   "Scholar's Commonplace Book (physical)":{price:44.99,cost:15.28,type:"physical"},
@@ -85,273 +242,315 @@ const PRODUCT_DEFAULTS={
   "Morning Reflection Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
   "Scholar's Daily Reading Log (physical)":{price:27.99,cost:7.34,type:"physical"},
   "Scholar's Annual Reading Planner (physical)":{price:26.99,cost:7.38,type:"physical"},
-  // ── LANGUAGE JOURNALS ──
-  "Ancient Scholar Hebrew Reflection Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Ancient Scholar Greek Reflection Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Ancient Scholar Old English Reflection Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
+  "Ancient Scholar Hebrew Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
+  "Ancient Scholar Greek Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
+  "Ancient Scholar Old English Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
   "Scholar's Writing Companion Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
   "Contemplative Scholar's Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
   "Scholar's Idea Capture Notebook (physical)":{price:18.99,cost:6.01,type:"physical"},
-  // ── NEW BUILDS (W9) ──
   "Scholar's Advent Reading Calendar (physical)":{price:26.99,cost:4.16,type:"physical"},
   "Scholar's Curiosity Journal Omnibus (physical)":{price:29.99,cost:9.99,type:"physical"},
-  // ── 2027 PRODUCTS ──
   "Scholar's Year in Letters (physical)":{price:29.99,cost:9.99,type:"physical"},
   "Scholar's Curiosity Journal Vol I-VIII each (physical)":{price:29.99,cost:9.99,type:"physical"},
-  // ── BOOKMARKS ──
-  "Bookmark Set I - Autumn Scholar (physical)":{price:12.99,cost:2.97,type:"physical"},
-  "Bookmark Set II - Literary Parchment (physical)":{price:12.99,cost:2.97,type:"physical"},
-  "Bookmark Set III - Autumn Vol II (physical)":{price:12.99,cost:2.97,type:"physical"},
-  "Bookmark Set IV - Winter Vol I (physical)":{price:12.99,cost:2.97,type:"physical"},
-  "Bookmark Set V - Advent (physical)":{price:12.99,cost:2.97,type:"physical"},
-  "Bookmark Set VI - Gift Edition (physical)":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set I - Autumn Scholar":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set II - Literary Parchment":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set III - Autumn Vol II":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set IV - Winter Vol I":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set V - Advent":{price:12.99,cost:2.97,type:"physical"},
+  "Bookmark Set VI - Gift Edition":{price:12.99,cost:2.97,type:"physical"}
 };
 
-const EXPENSE_CATEGORIES=["Materials","Lulu Printing","Etsy Fees","Shopify","Shipping","Equipment","Marketing","Subscriptions","Domain & Hosting","Other"];
-function todayISO(){return new Date().toISOString().slice(0,10);}
-function ProgressBar({pct,col}){return React.createElement("div",{style:{height:6,background:"#F5E6C81a",borderRadius:3}},React.createElement("div",{style:{height:"100%",borderRadius:3,background:col,width:Math.min(100,Math.max(0,pct))+"%",transition:"width .4s"}}));}
+// ── STATE ──
+var income=load("tcd_income",[]);
+var expenses=load("tcd_expenses",[]);
+var overrides=load("tcd_overrides",{});
+var goal=load("tcd_goal",0);
+var prodFilter="all";
 
-function Nav({tab,set}){
-  const tabs=[{id:"dash",ic:"\uD83D\uDCCA",lb:"Dashboard"},{id:"income",ic:"\uD83D\uDCB0",lb:"Income"},{id:"expenses",ic:"\uD83E\uDDFE",lb:"Expenses"},{id:"products",ic:"\uD83D\uDCE6",lb:"Products"},{id:"goals",ic:"\uD83C\uDFAF",lb:"Goals"}];
-  return React.createElement("div",{style:{position:"sticky",top:0,zIndex:50,background:"#1a1208ee",backdropFilter:"blur(8px)",borderBottom:"1px solid #C9A84C33",display:"flex"}},
-    tabs.map(t=>React.createElement("button",{key:t.id,onClick:()=>set(t.id),style:{flex:1,padding:"10px 2px",fontSize:9,letterSpacing:.5,color:tab===t.id?GOLD_LT:"#F5E6C866",borderBottom:tab===t.id?"2px solid "+GOLD:"2px solid transparent",transition:"all .2s",fontFamily:"Cinzel,Georgia,serif"}},
-      React.createElement("div",{style:{fontSize:14,marginBottom:1}},t.ic),t.lb)));
+// ── TABS ──
+function show(id,btn){
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("on");});
+  document.querySelectorAll(".ntab").forEach(function(b){b.classList.remove("on");});
+  document.getElementById(id).classList.add("on");
+  btn.classList.add("on");
+  if(id==="dash")renderDash();
+  if(id==="income")renderIncome();
+  if(id==="expenses")renderExpenses();
+  if(id==="products")renderProducts();
+  if(id==="goals"){var t=document.getElementById("goal-target");if(t)t.value=goal||"";}
 }
 
-function Dashboard({income,expenses,goals}){
-  const totalIncome=income.reduce((a,i)=>a+i.amount,0);
-  const totalExpenses=expenses.reduce((a,e)=>a+e.amount,0);
-  const net=totalIncome-totalExpenses;
-  const now=new Date();
-  const thisMonth=now.toISOString().slice(0,7);
-  const monthIncome=income.filter(i=>i.date.startsWith(thisMonth)).reduce((a,i)=>a+i.amount,0);
-  const monthExpenses=expenses.filter(e=>e.date.startsWith(thisMonth)).reduce((a,e)=>a+e.amount,0);
-  const byCat={};
-  expenses.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
-  const catEntries=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
-  const byProduct={};
-  income.forEach(i=>{byProduct[i.product]=(byProduct[i.product]||0)+i.amount;});
-  const prodEntries=Object.entries(byProduct).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  const goal=goals.monthlyTarget||0;
-  const goalPct=goal>0?(monthIncome/goal)*100:0;
-  return React.createElement("div",{style:{padding:"14px"},className:"fade"},
-    React.createElement("div",{style:{textAlign:"center",marginBottom:16,borderBottom:"1px solid #C9A84C33",paddingBottom:12}},
-      React.createElement("div",{style:{fontSize:8,letterSpacing:5,color:GOLD,textTransform:"uppercase"},className:"cz"},"TheCuratorsDesk"),
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT,marginTop:3},className:"cz"},"Finances Dashboard")),
-    React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}},
-      [{l:"Total Income",v:totalIncome,c:"#7aE499"},{l:"Total Expenses",v:totalExpenses,c:"#E4977a"},{l:"Net Profit",v:net,c:net>=0?"#7aE499":"#E4977a"},{l:"This Month",v:monthIncome-monthExpenses,c:GOLD_LT}].map(s=>
-        React.createElement("div",{key:s.l,style:{background:"#231808",border:"1px solid #C9A84C22",borderRadius:10,padding:"10px 12px"}},
-          React.createElement("div",{style:{fontSize:8,color:"#F5E6C866",letterSpacing:1,textTransform:"uppercase",marginBottom:4},className:"cz"},s.l),
-          React.createElement("div",{style:{fontSize:18,fontWeight:"bold",color:s.c}},"$"+s.v.toFixed(2))))),
-    goal>0&&React.createElement("div",{style:{background:FOREST+"33",border:"1px solid "+GOLD+"44",borderRadius:10,padding:"10px 12px",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:9,color:GOLD,letterSpacing:2,textTransform:"uppercase",marginBottom:4},className:"cz"},"Monthly Income Goal"),
-      React.createElement("div",{style:{fontSize:11,color:GOLD_LT,marginBottom:6}},"$"+monthIncome.toFixed(2)+" of $"+goal.toFixed(2)+" ("+goalPct.toFixed(0)+"%)"),
-      React.createElement(ProgressBar,{pct:goalPct,col:GOLD})),
-    prodEntries.length>0&&React.createElement("div",{style:{marginBottom:14}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Top Earning Products"),
-      prodEntries.map(([name,amt],i)=>{
-        const pct=totalIncome>0?(amt/totalIncome)*100:0;
-        return React.createElement("div",{key:i,style:{marginBottom:8}},
-          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",fontSize:11,color:PARCH,marginBottom:3}},
-            React.createElement("span",null,name),React.createElement("span",{style:{color:GOLD_LT,fontWeight:"bold"}},"$"+amt.toFixed(2))),
-          React.createElement(ProgressBar,{pct,col:i===0?GOLD:"#7aE499"}));})),
-    catEntries.length>0&&React.createElement("div",null,
-      React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Expenses by Category"),
-      catEntries.map(([cat,amt],i)=>{
-        const pct=totalExpenses>0?(amt/totalExpenses)*100:0;
-        return React.createElement("div",{key:i,style:{marginBottom:8}},
-          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",fontSize:11,color:PARCH,marginBottom:3}},
-            React.createElement("span",null,cat),React.createElement("span",{style:{color:"#E4977a",fontWeight:"bold"}},"$"+amt.toFixed(2))),
-          React.createElement(ProgressBar,{pct,col:BURG}));})));
+// ── UTILS ──
+function today(){return new Date().toISOString().slice(0,10);}
+function fmt(n){return"$"+(+n).toFixed(2);}
+function bar(pct,col){return'<div class="bar-bg"><div class="bar-fill" style="width:'+Math.min(100,Math.max(0,pct))+'%;background:'+col+'"></div></div>';}
+
+// ── DASHBOARD ──
+function renderDash(){
+  var ti=income.reduce(function(a,i){return a+i.amount;},0);
+  var te=expenses.reduce(function(a,e){return a+e.amount;},0);
+  var net=ti-te;
+  var month=new Date().toISOString().slice(0,7);
+  var mi=income.filter(function(i){return i.date.startsWith(month);}).reduce(function(a,i){return a+i.amount;},0);
+  var me=expenses.filter(function(e){return e.date.startsWith(month);}).reduce(function(a,e){return a+e.amount;},0);
+
+  var stats=[
+    {l:"Total Income",v:ti,c:"g"},
+    {l:"Total Expenses",v:te,c:"r"},
+    {l:"Net Profit",v:net,c:net>=0?"g":"r"},
+    {l:"This Month",v:mi-me,c:"y"}
+  ];
+  document.getElementById("dash-stats").innerHTML=stats.map(function(s){
+    return'<div class="card"><div class="lbl">'+s.l+'</div><div class="val '+s.c+'">'+fmt(s.v)+'</div></div>';
+  }).join("");
+
+  var gEl=document.getElementById("dash-goal");
+  if(goal>0){
+    var gPct=mi/goal*100;
+    gEl.style.display="block";
+    gEl.innerHTML='<div class="card" style="background:#2D4A3E33;border-color:#C9A84C44"><div class="sh">Monthly Goal</div><div style="font-size:11px;color:#E4C977;margin-bottom:6px">'+fmt(mi)+' of '+fmt(goal)+' ('+gPct.toFixed(0)+'%)</div>'+bar(gPct,"#C9A84C")+'</div>';
+  }else{gEl.style.display="none";}
+
+  var byProd={};
+  income.forEach(function(i){byProd[i.product]=(byProd[i.product]||0)+i.amount;});
+  var top=Object.entries(byProd).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+  var pEl=document.getElementById("dash-products");
+  if(top.length>0){
+    pEl.innerHTML='<div class="sh">Top Earning Products</div>'+
+      top.map(function(e,i){
+        var pct=ti>0?e[1]/ti*100:0;
+        return'<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>'+e[0]+'</span><span style="color:#E4C977;font-weight:bold">'+fmt(e[1])+'</span></div>'+bar(pct,i===0?"#C9A84C":"#7aE499")+'</div>';
+      }).join("");
+  }else{pEl.innerHTML='';}
+
+  var byCat={};
+  expenses.forEach(function(e){byCat[e.category]=(byCat[e.category]||0)+e.amount;});
+  var cats=Object.entries(byCat).sort(function(a,b){return b[1]-a[1];});
+  var cEl=document.getElementById("dash-cats");
+  if(cats.length>0){
+    cEl.innerHTML='<div class="sh">Expenses by Category</div>'+
+      cats.map(function(e){
+        var pct=te>0?e[1]/te*100:0;
+        return'<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>'+e[0]+'</span><span style="color:#E4977a;font-weight:bold">'+fmt(e[1])+'</span></div>'+bar(pct,"#6B2737")+'</div>';
+      }).join("");
+  }else{cEl.innerHTML='';}
 }
 
-function IncomeTab({income,setIncome}){
-  const firstProd=Object.keys(PRODUCT_DEFAULTS)[0];
-  const[form,setForm]=useState({date:todayISO(),product:firstProd,amount:PRODUCT_DEFAULTS[firstProd].price,qty:1,note:""});
-  function addEntry(){const total=parseFloat(form.amount)*parseInt(form.qty||1);setIncome(prev=>[{...form,amount:total,id:Date.now()},...prev]);setForm({...form,note:""});}
-  function removeEntry(id){setIncome(prev=>prev.filter(e=>e.id!==id));}
-  function updateProduct(name){const def=PRODUCT_DEFAULTS[name];setForm({...form,product:name,amount:def?def.price:0});}
-  const[incomeSort,setIncomeSort]=useState("date-desc");
-  const sortedIncome=[...income].sort((a,b)=>{
-    if(incomeSort==="date-desc")return b.date.localeCompare(a.date);
-    if(incomeSort==="date-asc")return a.date.localeCompare(b.date);
-    if(incomeSort==="amount-desc")return b.amount-a.amount;
+// ── INCOME ──
+function populateProducts(){
+  var sel=document.getElementById("inc-product");
+  if(!sel)return;
+  sel.innerHTML=Object.keys(DEFAULTS).map(function(n){return'<option value="'+n+'">'+n+'</option>';}).join("");
+  sel.onchange=function(){
+    var d=DEFAULTS[sel.value];
+    if(d){document.getElementById("inc-amount").value=d.price;}
+  };
+}
+function addIncome(){
+  var d=document.getElementById("inc-date").value;
+  var p=document.getElementById("inc-product").value;
+  var a=parseFloat(document.getElementById("inc-amount").value);
+  var q=parseInt(document.getElementById("inc-qty").value)||1;
+  var n=document.getElementById("inc-note").value;
+  if(!d||!p||isNaN(a))return;
+  income.unshift({id:Date.now(),date:d,product:p,amount:a*q,qty:q,note:n});
+  save("tcd_income",income);
+  document.getElementById("inc-note").value="";
+  renderIncome();
+}
+function removeIncome(id){
+  income=income.filter(function(e){return e.id!==id;});
+  save("tcd_income",income);
+  renderIncome();
+}
+function renderIncome(){
+  var tot=income.reduce(function(a,i){return a+i.amount;},0);
+  var tEl=document.getElementById("income-total");
+  if(tEl)tEl.textContent="Total: "+fmt(tot)+" · "+income.length+" sales logged";
+  var sort=document.getElementById("inc-sort")?document.getElementById("inc-sort").value:"date-desc";
+  var sorted=income.slice().sort(function(a,b){
+    if(sort==="date-desc")return b.date.localeCompare(a.date);
+    if(sort==="date-asc")return a.date.localeCompare(b.date);
+    if(sort==="amount-desc")return b.amount-a.amount;
     return a.amount-b.amount;
   });
-  const total=income.reduce((a,i)=>a+i.amount,0);
-  return React.createElement("div",{style:{padding:"14px"},className:"fade"},
-    React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"\uD83D\uDCB0 Income"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},"Total: $"+total.toFixed(2)+" \u00b7 "+income.length+" sales logged")),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"12px",marginBottom:16}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Log a Sale"),
-      React.createElement("div",{style:{display:"grid",gap:8}},
-        React.createElement("input",{type:"date",value:form.date,onChange:e=>setForm({...form,date:e.target.value})}),
-        React.createElement("select",{value:form.product,onChange:e=>updateProduct(e.target.value),style:{fontSize:11}},Object.keys(PRODUCT_DEFAULTS).map(n=>React.createElement("option",{key:n,value:n},n))),
-        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}},
-          React.createElement("div",null,React.createElement("div",{style:{fontSize:9,color:"#F5E6C866",marginBottom:3}},"Amount ($)"),React.createElement("input",{type:"number",step:"0.01",value:form.amount,onChange:e=>setForm({...form,amount:e.target.value})})),
-          React.createElement("div",null,React.createElement("div",{style:{fontSize:9,color:"#F5E6C866",marginBottom:3}},"Qty"),React.createElement("input",{type:"number",min:"1",value:form.qty,onChange:e=>setForm({...form,qty:e.target.value})}))),
-        React.createElement("input",{type:"text",placeholder:"Note (optional)",value:form.note,onChange:e=>setForm({...form,note:e.target.value})}),
-        React.createElement("button",{onClick:addEntry,style:{background:FOREST,color:GOLD_LT,borderRadius:8,padding:"8px",fontSize:12,fontFamily:"Cinzel,serif",fontWeight:"bold",border:"1px solid "+GOLD+"44"}},"+ Log Sale"))),
-    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase"},className:"cz"},"Sales History"),
-      React.createElement("select",{value:incomeSort,onChange:e=>setIncomeSort(e.target.value),style:{fontSize:10,padding:"4px 6px"}},
-        React.createElement("option",{value:"date-desc"},"Newest first"),React.createElement("option",{value:"date-asc"},"Oldest first"),React.createElement("option",{value:"amount-desc"},"Amount high-low"),React.createElement("option",{value:"amount-asc"},"Amount low-high"))),
-    income.length===0&&React.createElement("div",{style:{textAlign:"center",color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No sales logged yet. Your first sale is coming."),
-    sortedIncome.map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid "+FOREST+"88",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
-      React.createElement("div",{style:{flex:1}},React.createElement("div",{style:{fontSize:11,color:PARCH}},e.product),React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},e.date+(e.note?" \u00b7 "+e.note:"")+(e.qty>1?" \u00b7 qty "+e.qty:""))),
-      React.createElement("div",{style:{fontSize:13,fontWeight:"bold",color:"#7aE499"}},"$"+e.amount.toFixed(2)),
-      React.createElement("button",{onClick:()=>removeEntry(e.id),style:{color:"#E4977a",fontSize:14,padding:"0 4px"}},"x"))));
+  var el=document.getElementById("income-list");
+  if(!el)return;
+  if(income.length===0){el.innerHTML='<div style="text-align:center;color:#F5E6C855;font-size:11px;font-style:italic;padding:20px">No sales logged yet. Your first sale is coming.</div>';return;}
+  el.innerHTML=sorted.map(function(e){
+    return'<div class="row income"><div style="flex:1"><div style="font-size:11px;color:#F5E6C8">'+e.product+'</div><div class="note">'+e.date+(e.note?" · "+e.note:"")+'</div></div><div style="font-size:13px;font-weight:bold;color:#7aE499">'+fmt(e.amount)+'</div><button class="del" onclick="removeIncome('+e.id+')">x</button></div>';
+  }).join("");
 }
 
-function ExpensesTab({expenses,setExpenses}){
-  const[form,setForm]=useState({date:todayISO(),category:EXPENSE_CATEGORIES[0],amount:"",note:""});
-  function addEntry(){if(!form.amount)return;setExpenses(prev=>[{...form,amount:parseFloat(form.amount),id:Date.now()},...prev]);setForm({...form,amount:"",note:""});}
-  function removeEntry(id){setExpenses(prev=>prev.filter(e=>e.id!==id));}
-  const[sortBy,setSortBy]=useState("date-desc");
-  const sorted=[...expenses].sort((a,b)=>{
-    if(sortBy==="date-desc")return b.date.localeCompare(a.date);
-    if(sortBy==="date-asc")return a.date.localeCompare(b.date);
-    if(sortBy==="amount-desc")return b.amount-a.amount;
-    if(sortBy==="amount-asc")return a.amount-b.amount;
+// ── EXPENSES ──
+function addExpense(){
+  var d=document.getElementById("exp-date").value;
+  var c=document.getElementById("exp-cat").value;
+  var a=parseFloat(document.getElementById("exp-amount").value);
+  var n=document.getElementById("exp-note").value;
+  if(!d||isNaN(a))return;
+  expenses.unshift({id:Date.now(),date:d,category:c,amount:a,note:n});
+  save("tcd_expenses",expenses);
+  document.getElementById("exp-amount").value="";
+  document.getElementById("exp-note").value="";
+  renderExpenses();
+}
+function removeExpense(id){
+  expenses=expenses.filter(function(e){return e.id!==id;});
+  save("tcd_expenses",expenses);
+  renderExpenses();
+}
+function renderExpenses(){
+  var tot=expenses.reduce(function(a,e){return a+e.amount;},0);
+  var tEl=document.getElementById("exp-total");
+  if(tEl)tEl.textContent="Total: "+fmt(tot)+" · "+expenses.length+" entries";
+  var sort=document.getElementById("exp-sort")?document.getElementById("exp-sort").value:"date-desc";
+  var sorted=expenses.slice().sort(function(a,b){
+    if(sort==="date-desc")return b.date.localeCompare(a.date);
+    if(sort==="date-asc")return a.date.localeCompare(b.date);
+    if(sort==="amount-desc")return b.amount-a.amount;
+    if(sort==="amount-asc")return a.amount-b.amount;
     return a.category.localeCompare(b.category);
   });
-  const total=expenses.reduce((a,e)=>a+e.amount,0);
-  return React.createElement("div",{style:{padding:"14px"},className:"fade"},
-    React.createElement("div",{style:{textAlign:"center",marginBottom:14}},
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"\uD83E\uDDFE Expenses"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C866",marginTop:4}},"Total: $"+total.toFixed(2)+" \u00b7 "+expenses.length+" entries")),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"12px",marginBottom:16}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Log an Expense"),
-      React.createElement("div",{style:{display:"grid",gap:8}},
-        React.createElement("input",{type:"date",value:form.date,onChange:e=>setForm({...form,date:e.target.value})}),
-        React.createElement("select",{value:form.category,onChange:e=>setForm({...form,category:e.target.value}),style:{fontSize:11}},EXPENSE_CATEGORIES.map(c=>React.createElement("option",{key:c,value:c},c))),
-        React.createElement("input",{type:"number",step:"0.01",placeholder:"Amount",value:form.amount,onChange:e=>setForm({...form,amount:e.target.value})}),
-        React.createElement("input",{type:"text",placeholder:"Note (optional)",value:form.note,onChange:e=>setForm({...form,note:e.target.value})}),
-        React.createElement("button",{onClick:addEntry,style:{background:BURG,color:GOLD_LT,borderRadius:8,padding:"8px",fontSize:12,fontFamily:"Cinzel,serif",fontWeight:"bold",border:"1px solid "+GOLD+"44"}},"+ Add Expense"))),
-    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase"},className:"cz"},"Expenses"),
-      React.createElement("select",{value:sortBy,onChange:e=>setSortBy(e.target.value),style:{fontSize:10,padding:"4px 6px"}},
-        React.createElement("option",{value:"date-desc"},"Date (newest first)"),React.createElement("option",{value:"date-asc"},"Date (oldest first)"),React.createElement("option",{value:"amount-desc"},"Amount (high to low)"),React.createElement("option",{value:"amount-asc"},"Amount (low to high)"),React.createElement("option",{value:"category"},"Category (A-Z)"))),
-    expenses.length===0&&React.createElement("div",{style:{textAlign:"center",color:"#F5E6C855",fontSize:11,fontStyle:"italic",padding:20}},"No expenses logged yet"),
-    sorted.slice(0,50).map(e=>React.createElement("div",{key:e.id,style:{background:"#231808",border:"1px solid #6B273744",borderRadius:8,padding:"8px 10px",marginBottom:4,display:"flex",alignItems:"center",gap:8}},
-      React.createElement("div",{style:{flex:1}},React.createElement("div",{style:{fontSize:11,color:PARCH}},e.category),React.createElement("div",{style:{fontSize:9,color:"#F5E6C855"}},e.date+(e.note?" \u00b7 "+e.note:""))),
-      React.createElement("div",{style:{fontSize:13,fontWeight:"bold",color:"#E4977a"}},"$"+e.amount.toFixed(2)),
-      React.createElement("button",{onClick:()=>removeEntry(e.id),style:{color:"#E4977a",fontSize:14,padding:"0 4px"}},"x"))));
+  var el=document.getElementById("expense-list");
+  if(!el)return;
+  if(expenses.length===0){el.innerHTML='<div style="text-align:center;color:#F5E6C855;font-size:11px;font-style:italic;padding:20px">No expenses logged yet</div>';return;}
+  el.innerHTML=sorted.slice(0,50).map(function(e){
+    return'<div class="row expense"><div style="flex:1"><div style="font-size:11px;color:#F5E6C8">'+e.category+'</div><div class="note">'+e.date+(e.note?" · "+e.note:"")+'</div></div><div style="font-size:13px;font-weight:bold;color:#E4977a">'+fmt(e.amount)+'</div><button class="del" onclick="removeExpense('+e.id+')">x</button></div>';
+  }).join("");
 }
 
-function ProductsTab(){
-  const[overrides,setOverrides]=useLS("tcd_product_overrides",{});
-  const[filter,setFilter]=useState("all");
-  function getVal(name,field){return overrides[name]&&overrides[name][field]!==undefined?overrides[name][field]:PRODUCT_DEFAULTS[name][field];}
-  function setVal(name,field,raw){
-    const val=parseFloat(raw);
-    setOverrides(function(prev){const next=Object.assign({},prev);next[name]=Object.assign({},prev[name]||{});next[name][field]=isNaN(val)?0:val;return next;});
-  }
-  function reset(name){setOverrides(function(prev){const n=Object.assign({},prev);delete n[name];return n;});}
-  const FULFILL=7.50;
-  const entries=Object.entries(PRODUCT_DEFAULTS).filter(function(e){return filter==="all"||e[1].type===filter;});
-  return React.createElement("div",{style:{padding:14},className:"fade"},
-    React.createElement("div",{style:{textAlign:"center",marginBottom:12}},
-      React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"\uD83D\uDCE6 Product Profitability"),
-      React.createElement("div",{style:{fontSize:9,color:"#F5E6C866",marginTop:4,lineHeight:1.8}},
-        "Shopify: 2.9% + $0.30",React.createElement("br"),
-        "Etsy: 9.5% + $0.45  \u00b7  Physical fulfillment: $7.50")),
-    React.createElement("div",{style:{display:"flex",gap:6,marginBottom:12}},
-      ["all","digital","physical"].map(function(f){
-        return React.createElement("button",{key:f,onClick:function(){setFilter(f);},
-          style:{flex:1,padding:"7px",fontSize:9,borderRadius:6,letterSpacing:1,fontFamily:"Cinzel,serif",
-            background:filter===f?GOLD+"33":"#231808",color:filter===f?GOLD_LT:"#F5E6C866",
-            border:"1px solid "+(filter===f?GOLD+"66":"#C9A84C22")}},
-          f.charAt(0).toUpperCase()+f.slice(1));})),
-    entries.map(function(entry){
-      const name=entry[0];const d=entry[1];
-      const price=getVal(name,"price");
-      const printCost=getVal(name,"cost");
-      const isPhys=d.type==="physical";
-      const totalCost=printCost+(isPhys?FULFILL:0);
-      const shopifyNet=price-totalCost-(price*0.029+0.30);
-      const etsyNet=price-totalCost-(price*0.095+0.45);
-      const marginPct=price>0?(shopifyNet/price*100):0;
-      const modified=!!overrides[name];
-      const defPrice=PRODUCT_DEFAULTS[name].price;
-      const defCost=PRODUCT_DEFAULTS[name].cost;
-      return React.createElement("div",{key:name,
-        style:{background:"#231808",border:"1px solid "+(modified?"#C9A84C55":"#C9A84C18"),borderRadius:10,padding:"10px 12px",marginBottom:6}},
-        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}},
-          React.createElement("span",{style:{fontSize:11,color:modified?GOLD_LT:PARCH,fontWeight:"bold",flex:1,paddingRight:6,lineHeight:1.3}},name),
-          React.createElement("div",{style:{display:"flex",gap:4,alignItems:"center",flexShrink:0}},
-            React.createElement("span",{className:"chip",style:{background:isPhys?"#3a1e2a":"#1e3a5a",color:isPhys?"#e87ab8":"#7ab8e8",border:"1px solid "+(isPhys?"#e87ab8":"#7ab8e8")+"33"}},d.type),
-            modified?React.createElement("button",{onClick:function(){reset(name);},style:{fontSize:8,color:"#F5E6C866",background:"#C9A84C22",border:"1px solid #C9A84C33",borderRadius:4,padding:"2px 6px"}},"reset"):null)),
-        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}},
-          React.createElement("div",null,
-            React.createElement("div",{style:{fontSize:8,color:"#F5E6C855",marginBottom:3,letterSpacing:1},className:"cz"},"RETAIL PRICE"),
-            React.createElement("div",{style:{display:"flex",alignItems:"center",gap:3}},
-              React.createElement("span",{style:{color:GOLD_LT,fontSize:13,fontWeight:"bold"}},"$"),
-              React.createElement("input",{type:"number",step:"0.01",min:"0",value:price,
-                onChange:function(e){setVal(name,"price",e.target.value);},
-                style:{width:"100%",fontSize:15,fontWeight:"bold",color:GOLD_LT,background:"#2D1F0A",border:"1px solid #C9A84C55",borderRadius:6,padding:"5px 8px"}})),
-            price!==defPrice?React.createElement("div",{style:{fontSize:8,color:"#F5E6C844",marginTop:2}},"default $"+defPrice.toFixed(2)):null),
-          React.createElement("div",null,
-            React.createElement("div",{style:{fontSize:8,color:"#F5E6C855",marginBottom:3,letterSpacing:1},className:"cz"},isPhys?"PRINT COST":"COST"),
-            React.createElement("div",{style:{display:"flex",alignItems:"center",gap:3}},
-              React.createElement("span",{style:{color:"#E4977a",fontSize:13}},"$"),
-              React.createElement("input",{type:"number",step:"0.01",min:"0",value:printCost,
-                onChange:function(e){setVal(name,"cost",e.target.value);},
-                style:{width:"100%",fontSize:15,color:"#E4977a",background:"#2D1F0A",border:"1px solid #E4977a44",borderRadius:6,padding:"5px 8px"}})),
-            isPhys?React.createElement("div",{style:{fontSize:8,color:"#F5E6C844",marginTop:2}},"+$7.50 fulfillment = $"+totalCost.toFixed(2)):null,
-            printCost!==defCost?React.createElement("div",{style:{fontSize:8,color:"#F5E6C844",marginTop:2}},"default $"+defCost.toFixed(2)):null)),
-        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4,background:"#1a1208",borderRadius:6,padding:"8px 10px"}},
-          React.createElement("div",null,
-            React.createElement("div",{style:{fontSize:7,color:"#F5E6C855",letterSpacing:1,marginBottom:3},className:"cz"},"MARGIN"),
-            React.createElement("div",{style:{fontSize:17,fontWeight:"bold",color:marginPct>=50?"#7aE499":marginPct>=30?"#E4C977":"#E4977a"}},marginPct.toFixed(0)+"%")),
-          React.createElement("div",null,
-            React.createElement("div",{style:{fontSize:7,color:"#F5E6C855",letterSpacing:1,marginBottom:3},className:"cz"},"SHOPIFY"),
-            React.createElement("div",{style:{fontSize:17,fontWeight:"bold",color:shopifyNet>=0?"#7aE499":"#E4977a"}},"$"+shopifyNet.toFixed(2))),
-          React.createElement("div",null,
-            React.createElement("div",{style:{fontSize:7,color:"#F5E6C855",letterSpacing:1,marginBottom:3},className:"cz"},"ETSY"),
-            React.createElement("div",{style:{fontSize:17,fontWeight:"bold",color:etsyNet>=0?"#A8D8A8":"#E4977a"}},"$"+etsyNet.toFixed(2)))));
-    }),
-    React.createElement("div",{style:{fontSize:9,color:"#F5E6C855",fontStyle:"italic",marginTop:14,textAlign:"center",lineHeight:1.8}},
-      "Changes save automatically.",React.createElement("br"),"Tap reset to restore original values."));
+// ── PRODUCTS ──
+function getPrice(name){return overrides[name]&&overrides[name].price!==undefined?overrides[name].price:DEFAULTS[name].price;}
+function getCost(name){return overrides[name]&&overrides[name].cost!==undefined?overrides[name].cost:DEFAULTS[name].cost;}
+function setPrice(name,val){
+  if(!overrides[name])overrides[name]={};
+  overrides[name].price=parseFloat(val)||0;
+  save("tcd_overrides",overrides);
+  calcRow(name);
+}
+function setCost(name,val){
+  if(!overrides[name])overrides[name]={};
+  overrides[name].cost=parseFloat(val)||0;
+  save("tcd_overrides",overrides);
+  calcRow(name);
+}
+function resetProd(name){
+  delete overrides[name];
+  save("tcd_overrides",overrides);
+  renderProducts();
+}
+function calcRow(name){
+  var price=getPrice(name);
+  var printCost=getCost(name);
+  var isPhys=DEFAULTS[name].type==="physical";
+  var totalCost=printCost+(isPhys?7.50:0);
+  var shopNet=price-totalCost-(price*0.029+0.30);
+  var etsyNet=price-totalCost-(price*0.095+0.45);
+  var marg=price>0?shopNet/price*100:0;
+  var id=name.replace(/[^a-z0-9]/gi,"_");
+  var mEl=document.getElementById("m_"+id);
+  var sEl=document.getElementById("s_"+id);
+  var eEl=document.getElementById("e_"+id);
+  var cEl=document.getElementById("c_"+id);
+  if(mEl)mEl.textContent=marg.toFixed(0)+"%";
+  if(mEl)mEl.className="val "+(marg>=50?"g":marg>=30?"y":"r");
+  if(sEl)sEl.textContent=fmt(shopNet);
+  if(sEl)sEl.className="val "+(shopNet>=0?"g":"r");
+  if(eEl)eEl.textContent=fmt(etsyNet);
+  if(eEl)eEl.className="val "+(etsyNet>=0?"s":"r");
+  if(cEl&&isPhys)cEl.textContent="+$7.50 = "+fmt(totalCost);
+  // Update reset button visibility
+  var rEl=document.getElementById("r_"+id);
+  if(rEl)rEl.style.display=overrides[name]?"inline":"none";
+}
+function filterProds(f,btn){
+  prodFilter=f;
+  document.querySelectorAll(".filt").forEach(function(b){b.classList.remove("on");});
+  btn.classList.add("on");
+  renderProducts();
+}
+function renderProducts(){
+  var el=document.getElementById("product-list");
+  if(!el)return;
+  var html="";
+  Object.keys(DEFAULTS).forEach(function(name){
+    var d=DEFAULTS[name];
+    if(prodFilter!=="all"&&d.type!==prodFilter)return;
+    var price=getPrice(name);
+    var printCost=getCost(name);
+    var isPhys=d.type==="physical";
+    var totalCost=printCost+(isPhys?7.50:0);
+    var shopNet=price-totalCost-(price*0.029+0.30);
+    var etsyNet=price-totalCost-(price*0.095+0.45);
+    var marg=price>0?shopNet/price*100:0;
+    var modified=!!overrides[name];
+    var id=name.replace(/[^a-z0-9]/gi,"_");
+    var defPrice=DEFAULTS[name].price;
+    var defCost=DEFAULTS[name].cost;
+    html+='<div class="card '+(modified?"hi":"''")+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">'+
+        '<span style="font-size:11px;color:'+(modified?"#E4C977":"#F5E6C8")+';font-weight:bold;flex:1;padding-right:6px;line-height:1.3">'+name+'</span>'+
+        '<div style="display:flex;gap:4px;align-items:center;flex-shrink:0">'+
+          '<span class="chip '+(isPhys?"p":"d")+'">'+(isPhys?"physical":"digital")+'</span>'+
+          '<button id="r_'+id+'" class="btn sm" onclick="resetProd(''+name.replace(/'/g,"\'")+'')" style="display:'+(modified?"inline":"none")+'">reset</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="grid2" style="margin-bottom:8px">'+
+        '<div><div class="lbl">Retail Price</div>'+
+          '<div style="display:flex;align-items:center;gap:3px">'+
+            '<span style="color:#E4C977;font-size:13px;font-weight:bold">$</span>'+
+            '<input class="price" type="number" step="0.01" min="0" value="'+price+'" oninput="setPrice(''+name.replace(/'/g,"\'")+''&#44;this.value)">'+
+          '</div>'+
+          (price!==defPrice?'<div style="font-size:8px;color:#F5E6C844;margin-top:2px">default $'+defPrice.toFixed(2)+'</div>':'')+
+        '</div>'+
+        '<div><div class="lbl">'+(isPhys?"Print Cost":"Cost")+'</div>'+
+          '<div style="display:flex;align-items:center;gap:3px">'+
+            '<span style="color:#E4977a;font-size:13px">$</span>'+
+            '<input class="cost" type="number" step="0.01" min="0" value="'+printCost+'" oninput="setCost(''+name.replace(/'/g,"\'")+''&#44;this.value)">'+
+          '</div>'+
+          (isPhys?'<div id="c_'+id+'" style="font-size:8px;color:#F5E6C844;margin-top:2px">+$7.50 = '+fmt(totalCost)+'</div>':'')+
+          (printCost!==defCost?'<div style="font-size:8px;color:#F5E6C844;margin-top:2px">default $'+defCost.toFixed(2)+'</div>':'')+
+        '</div>'+
+      '</div>'+
+      '<div class="res grid3">'+
+        '<div><div class="lbl">Margin</div><div id="m_'+id+'" class="val '+(marg>=50?"g":marg>=30?"y":"r")+'">'+marg.toFixed(0)+'%</div></div>'+
+        '<div><div class="lbl">Shopify</div><div id="s_'+id+'" class="val '+(shopNet>=0?"g":"r")+'">'+fmt(shopNet)+'</div></div>'+
+        '<div><div class="lbl">Etsy</div><div id="e_'+id+'" class="val '+(etsyNet>=0?"s":"r")+'">'+fmt(etsyNet)+'</div></div>'+
+      '</div>'+
+    '</div>';
+  });
+  el.innerHTML=html;
 }
 
-function GoalsTab({goals,setGoals}){
-  return React.createElement("div",{style:{padding:"14px"},className:"fade"},
-    React.createElement("div",{style:{textAlign:"center",marginBottom:14}},React.createElement("div",{style:{fontSize:18,color:GOLD_LT},className:"cz"},"\uD83C\uDFAF Goals")),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"14px",marginBottom:12}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Monthly Income Goal"),
-      React.createElement("input",{type:"number",placeholder:"e.g. 200",value:goals.monthlyTarget||"",onChange:function(e){setGoals(Object.assign({},goals,{monthlyTarget:parseFloat(e.target.value)||0}));},style:{width:"100%",fontSize:16}}),
-      React.createElement("div",{style:{fontSize:10,color:"#F5E6C855",marginTop:6}},"Tracked against actual income on the Dashboard")),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"14px",marginBottom:12}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Bookmark Break-Even"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6}},"HP 64XL ink ~$68.98 prints ~24 sets. At $7.11 profit/set (Shopify) = $170 gross per cartridge."),
-      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,fontWeight:"bold",marginTop:4}},"Break even after 10 sets sold.")),
-    React.createElement("div",{style:{background:"#231808",border:"1px solid #C9A84C33",borderRadius:10,padding:"14px"}},
-      React.createElement("div",{style:{fontSize:9,letterSpacing:2,color:GOLD,textTransform:"uppercase",marginBottom:8},className:"cz"},"Shopify Subscription"),
-      React.createElement("div",{style:{fontSize:11,color:"#F5E6C8aa",lineHeight:1.6}},"$1/mo x 3 months = $3 trial. After trial: $39/mo."),
-      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,fontWeight:"bold",marginTop:4}},"Break even at ~5-6 sales per month.")));
+// ── GOALS ──
+function saveGoal(){
+  goal=parseFloat(document.getElementById("goal-target").value)||0;
+  save("tcd_goal",goal);
 }
 
-function App(){
-  const[tab,setTab]=useState("dash");
-  const[income,setIncome]=useLS("tcd_income",[]);
-  const[expenses,setExpenses]=useLS("tcd_expenses",[]);
-  const[goals,setGoals]=useLS("tcd_goals",{monthlyTarget:0});
-  return React.createElement("div",{style:{maxWidth:520,margin:"0 auto",minHeight:"100vh",background:"#1a1208",paddingBottom:28}},
-    React.createElement("div",{style:{background:"linear-gradient(to bottom,"+BURG+","+DARK+")",padding:"16px 16px 12px",textAlign:"center",borderBottom:"1px solid #C9A84C33"}},
-      React.createElement("div",{style:{fontSize:8,letterSpacing:6,color:GOLD,textTransform:"uppercase"},className:"cz"},"TheCuratorsDesk"),
-      React.createElement("div",{style:{fontSize:13,color:GOLD_LT,marginTop:2,letterSpacing:1},className:"cz"},"Finances")),
-    React.createElement(Nav,{tab,set:setTab}),
-    tab==="dash"&&React.createElement(Dashboard,{income,expenses,goals}),
-    tab==="income"&&React.createElement(IncomeTab,{income,setIncome}),
-    tab==="expenses"&&React.createElement(ExpensesTab,{expenses,setExpenses}),
-    tab==="products"&&React.createElement(ProductsTab,null),
-    tab==="goals"&&React.createElement(GoalsTab,{goals,setGoals}));
+// ── INIT ──
+function init(){
+  // Set today's date on forms
+  var d=today();
+  var incDate=document.getElementById("inc-date");
+  var expDate=document.getElementById("exp-date");
+  if(incDate)incDate.value=d;
+  if(expDate)expDate.value=d;
+  // Populate product dropdown
+  populateProducts();
+  // Set default amount from first product
+  var firstProd=Object.keys(DEFAULTS)[0];
+  var incAmount=document.getElementById("inc-amount");
+  if(incAmount&&DEFAULTS[firstProd])incAmount.value=DEFAULTS[firstProd].price;
+  // Render dashboard
+  renderDash();
+  // Set goal
+  var gt=document.getElementById("goal-target");
+  if(gt&&goal)gt.value=goal;
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
-
+window.addEventListener("load",init);
 </script>
 </body>
 </html>

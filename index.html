@@ -80,7 +80,7 @@ input.cost{background:#2D1F0A;border-color:#E4977a44;font-size:15px;color:#E4977
 </div>
 
 <!-- DASHBOARD -->
-<div id="dash" class="tab on">
+<div id="dash" class="tab">
   <div class="grid2" style="margin-bottom:14px" id="dash-stats"></div>
   <div id="dash-goal" style="display:none;margin-bottom:14px"></div>
   <div id="dash-products" style="margin-bottom:14px"></div>
@@ -269,15 +269,15 @@ var prodFilter="all";
 
 // ── TABS ──
 function show(id,btn){
-  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("on");});
-  document.querySelectorAll(".ntab").forEach(function(b){b.classList.remove("on");});
-  document.getElementById(id).classList.add("on");
-  btn.classList.add("on");
-  if(id==="dash")renderDash();
-  if(id==="income")renderIncome();
-  if(id==="expenses")renderExpenses();
-  if(id==="products")renderProducts();
-  if(id==="goals"){var t=document.getElementById("goal-target");if(t)t.value=goal||"";}
+  try{
+    var tabs=document.querySelectorAll(".tab");
+    for(var i=0;i<tabs.length;i++){tabs[i].style.display="none";}
+    var btns=document.querySelectorAll(".ntab");
+    for(var i=0;i<btns.length;i++){btns[i].classList.remove("on");}
+    var el=document.getElementById(id);
+    if(el){el.style.display="block";}
+    if(btn){btn.classList.add("on");}
+  }catch(e){console.error("show error:",e);}
 }
 
 // ── UTILS ──
@@ -531,23 +531,34 @@ function saveGoal(){
 
 // ── INIT ──
 function init(){
-  // Set today's date on forms
-  var d=today();
-  var incDate=document.getElementById("inc-date");
-  var expDate=document.getElementById("exp-date");
-  if(incDate)incDate.value=d;
-  if(expDate)expDate.value=d;
-  // Populate product dropdown
-  populateProducts();
-  // Set default amount from first product
-  var firstProd=Object.keys(DEFAULTS)[0];
-  var incAmount=document.getElementById("inc-amount");
-  if(incAmount&&DEFAULTS[firstProd])incAmount.value=DEFAULTS[firstProd].price;
-  // Render dashboard
-  renderDash();
-  // Set goal
-  var gt=document.getElementById("goal-target");
-  if(gt&&goal)gt.value=goal;
+  try{
+    // Hide all tabs except dash using style.display
+    var tabs=document.querySelectorAll(".tab");
+    for(var i=0;i<tabs.length;i++){tabs[i].style.display="none";}
+    var dash=document.getElementById("dash");
+    if(dash)dash.style.display="block";
+    // Set today's date
+    var d=today();
+    var incDate=document.getElementById("inc-date");
+    var expDate=document.getElementById("exp-date");
+    if(incDate)incDate.value=d;
+    if(expDate)expDate.value=d;
+    // Populate product dropdown
+    populateProducts();
+    // Set default amount
+    var firstProd=Object.keys(DEFAULTS)[0];
+    var incAmount=document.getElementById("inc-amount");
+    if(incAmount&&DEFAULTS[firstProd])incAmount.value=DEFAULTS[firstProd].price;
+    // Render dashboard
+    renderDash();
+    // Render products and income in background
+    renderProducts();
+    renderIncome();
+    renderExpenses();
+    // Set goal
+    var gt=document.getElementById("goal-target");
+    if(gt&&goal)gt.value=goal;
+  }catch(e){console.error("init error:",e);}
 }
 
 window.addEventListener("load",init);

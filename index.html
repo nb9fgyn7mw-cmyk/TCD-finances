@@ -156,7 +156,7 @@ input.cost{background:#2D1F0A;border-color:#E4977a44;font-size:15px;color:#E4977
   <div style="text-align:center;margin-bottom:12px">
     <div style="font-size:18px;color:#E4C977" class="cz">Product Profitability</div>
     <div style="font-size:9px;color:#F5E6C866;margin-top:4px;line-height:1.8">
-      Shopify: 2.9% + $0.30 &nbsp;|&nbsp; Etsy: 9.5% + $0.45<br>Physical fulfillment: $7.50
+      Shopify: 2.9% + $0.30 &nbsp;|&nbsp; Etsy: 9.5% + $0.45<br>Physical fulfillment: $5.60 all products (all under 1lb incl. packaging)<br><span style='font-size:9px;color:#F5E6C899'>Packaging $1.85: Kraft bubble mailer $1.00 + tissue $0.15 + wax seal $0.50 + card $0.10 + sticker $0.10 · USPS Media Mail under 1lb $3.75 · ⚠️ Classicist's Companion 0.982lb with packaging — weigh before shipping</span>
     </div>
   </div>
   <div class="filters">
@@ -199,57 +199,57 @@ function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
 // ── PRODUCT DEFAULTS ──
 var DEFAULTS={
-  "Sticker Sheet Vol. I (digital)":{price:4.99,cost:0,type:"digital"},
-  "Sticker Sheet Vol. II (digital)":{price:4.99,cost:0,type:"digital"},
-  "Sticker Sheet Bundle Vol. I+II (digital)":{price:7.99,cost:0,type:"digital"},
-  "Wall Art - Veritas Lux Mea (digital)":{price:3.99,cost:0,type:"digital"},
-  "Wall Art - Per Aspera Ad Astra (digital)":{price:3.99,cost:0,type:"digital"},
-  "Wall Art - Ars Longa Vita Brevis (digital)":{price:3.99,cost:0,type:"digital"},
-  "Wall Art Vol. I Bundle - 3 prints (digital)":{price:8.99,cost:0,type:"digital"},
-  "Latin Quote Art Vol. I - each (digital)":{price:3.99,cost:0,type:"digital"},
-  "Latin Quote Art Vol. I - Bundle (digital)":{price:8.99,cost:0,type:"digital"},
-  "Latin Quote Art Vol. II - each (digital)":{price:3.99,cost:0,type:"digital"},
-  "Latin Quote Art Vol. II - Bundle (digital)":{price:8.99,cost:0,type:"digital"},
-  "Latin Quote Art Vol. III - each (digital)":{price:3.99,cost:0,type:"digital"},
-  "Latin Quote Art Vol. III - Bundle (digital)":{price:8.99,cost:0,type:"digital"},
-  "Botanical Prints Vol. I - Oak (digital)":{price:4.99,cost:0,type:"digital"},
-  "Botanical Prints Vol. I - Rosemary (digital)":{price:4.99,cost:0,type:"digital"},
-  "Botanical Prints Vol. I - Laurel (digital)":{price:4.99,cost:0,type:"digital"},
-  "Botanical Prints Vol. I - Bundle (digital)":{price:9.99,cost:0,type:"digital"},
-  "Scholar's Daily Notepad (digital)":{price:3.99,cost:0,type:"digital"},
-  "Scholar's Daily Reading Log (digital)":{price:7.99,cost:0,type:"digital"},
-  "Scholar's Habit Tracker (digital)":{price:2.99,cost:0,type:"digital"},
-  "Scholar's Annual Reading Planner (digital)":{price:12.99,cost:0,type:"digital"},
-  "Scholar's Reading Challenge (digital)":{price:6.99,cost:0,type:"digital"},
-  "Scholar's Commonplace Book (digital)":{price:18.99,cost:0,type:"digital"},
-  "Classicist's Reading Journal (digital)":{price:13.99,cost:0,type:"digital"},
-  "Book Club Kit (digital)":{price:8.99,cost:0,type:"digital"},
-  "Bookmark Set Digital (digital)":{price:4.99,cost:0,type:"digital"},
-  "Autumn Reading Journal (digital)":{price:8.99,cost:0,type:"digital"},
-  "Autumn TBR Journal (digital)":{price:7.99,cost:0,type:"digital"},
-  "Weekly Planner (digital)":{price:9.99,cost:0,type:"digital"},
-  "Self-Reflection Journal (digital)":{price:8.99,cost:0,type:"digital"},
-  "Morning Reflection Journal (digital)":{price:9.99,cost:0,type:"digital"},
-  "Scholar's Year in Letters (digital)":{price:12.99,cost:0,type:"digital"},
-  "Classicist's Companion (physical)":{price:39.99,cost:17.31,type:"physical"},
-  "Classicist's Reading Journal (physical)":{price:24.99,cost:6.41,type:"physical"},
-  "Scholar's Commonplace Book (physical)":{price:44.99,cost:15.28,type:"physical"},
-  "Scholar's Reading Challenge (physical)":{price:24.99,cost:4.51,type:"physical"},
-  "Autumn Reading Journal (physical)":{price:24.99,cost:6.06,type:"physical"},
-  "Autumn TBR Journal (physical)":{price:19.99,cost:3.89,type:"physical"},
-  "Weekly Planner (physical)":{price:24.99,cost:6.63,type:"physical"},
-  "Self-Reflection Journal (physical)":{price:22.99,cost:4.77,type:"physical"},
-  "Morning Reflection Journal (physical)":{price:22.99,cost:6.01,type:"physical"},
-  "Scholar's Daily Reading Log (physical)":{price:27.99,cost:7.34,type:"physical"},
-  "Scholar's Annual Reading Planner (physical)":{price:26.99,cost:7.38,type:"physical"},
-  "Ancient Scholar Hebrew Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Ancient Scholar Greek Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Ancient Scholar Old English Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Scholar's Writing Companion Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Contemplative Scholar's Journal (physical)":{price:29.99,cost:9.99,type:"physical"},
-  "Scholar's Idea Capture Notebook (physical)":{price:18.99,cost:6.01,type:"physical"},
-  "Scholar's Advent Reading Calendar (physical)":{price:26.99,cost:4.16,type:"physical"},
-  "Scholar's Curiosity Journal Omnibus (physical)":{price:29.99,cost:9.99,type:"physical"},
+  "Sticker Sheet Vol. I (digital)":{price:4.99,cost:0,type:"digital",sku:"STK-V1-D"},
+  "Sticker Sheet Vol. II (digital)":{price:4.99,cost:0,type:"digital",sku:"STK-V2-D"},
+  "Sticker Sheet Bundle Vol. I+II (digital)":{price:7.99,cost:0,type:"digital",sku:"STK-BD-D"},
+  "Wall Art - Veritas Lux Mea (digital)":{price:3.99,cost:0,type:"digital",sku:"WAL-VLM-D"},
+  "Wall Art - Per Aspera Ad Astra (digital)":{price:3.99,cost:0,type:"digital",sku:"WAL-PAA-D"},
+  "Wall Art - Ars Longa Vita Brevis (digital)":{price:3.99,cost:0,type:"digital",sku:"WAL-ALB-D"},
+  "Wall Art Vol. I Bundle - 3 prints (digital)":{price:8.99,cost:0,type:"digital",sku:"WAL-V1B-D"},
+  "Latin Quote Art Vol. I - each (digital)":{price:3.99,cost:0,type:"digital",sku:"WAL-LQ1-D"},
+  "Latin Quote Art Vol. I - Bundle (digital)":{price:8.99,cost:0,type:"digital",sku:"WAL-LQ1B-D"},
+  "Latin Quote Art Vol. II - each (digital)":{price:3.99,cost:0,type:"digital",sku:"WAL-LQ2-D"},
+  "Latin Quote Art Vol. II - Bundle (digital)":{price:8.99,cost:0,type:"digital",sku:"WAL-LQ2B-D"},
+  "Latin Quote Art Vol. III - each (digital)":{price:3.99,cost:0,type:"digital",sku:"WAL-LQ3-D"},
+  "Latin Quote Art Vol. III - Bundle (digital)":{price:8.99,cost:0,type:"digital",sku:"WAL-LQ3B-D"},
+  "Botanical Prints Vol. I - Oak (digital)":{price:4.99,cost:0,type:"digital",sku:"WAL-BP1A-D"},
+  "Botanical Prints Vol. I - Rosemary (digital)":{price:4.99,cost:0,type:"digital",sku:"WAL-BP1B-D"},
+  "Botanical Prints Vol. I - Laurel (digital)":{price:4.99,cost:0,type:"digital",sku:"WAL-BP1C-D"},
+  "Botanical Prints Vol. I - Bundle (digital)":{price:9.99,cost:0,type:"digital",sku:"WAL-BP1BD-D"},
+  "Scholar's Daily Notepad (digital)":{price:3.99,cost:0,type:"digital",sku:"NTP-DLY-D"},
+  "Scholar's Daily Reading Log (digital)":{price:7.99,cost:0,type:"digital",sku:"JRN-DRL-D"},
+  "Scholar's Habit Tracker (digital)":{price:2.99,cost:0,type:"digital",sku:"CHL-HT-D"},
+  "Scholar's Annual Reading Planner (digital)":{price:9.99,cost:0,type:"digital",sku:"PLN-ARP-D"},
+  "Scholar's Reading Challenge (digital)":{price:6.99,cost:0,type:"digital",sku:"CHL-RC-D"},
+  "Scholar's Commonplace Book (digital)":{price:18.99,cost:0,type:"digital",sku:"JRN-CB-D"},
+  "Classicist's Reading Journal (digital)":{price:13.99,cost:0,type:"digital",sku:"JRN-CRJ-D"},
+  "Book Club Kit (digital)":{price:8.99,cost:0,type:"digital",sku:"KIT-BCK-D"},
+  "Bookmark Set Digital (digital)":{price:4.99,cost:0,type:"digital",sku:"BMK-DIG-D"},
+  "Autumn Reading Journal (digital)":{price:8.99,cost:0,type:"digital",sku:"JRN-ARJ-D"},
+  "Autumn TBR Journal (digital)":{price:7.99,cost:0,type:"digital",sku:"JRN-TBR-D"},
+  "Weekly Planner (digital)":{price:9.99,cost:0,type:"digital",sku:"PLN-WKP-D"},
+  "Self-Reflection Journal (digital)":{price:8.99,cost:0,type:"digital",sku:"JRN-SRJ-D"},
+  "Morning Reflection Journal (digital)":{price:9.99,cost:0,type:"digital",sku:"JRN-MRJ-D"},
+  "Scholar's Year in Letters (digital)":{price:12.99,cost:0,type:"digital",sku:"JRN-YIL-D"},
+  "Classicist's Companion (physical)":{price:39.99,cost:17.31,type:"physical",hc:true,sku:"JRN-CC-P"},
+  "Classicist's Reading Journal (physical)":{price:24.99,cost:6.41,type:"physical",sku:"JRN-CRJ-P"},
+  "Scholar's Commonplace Book (physical)":{price:44.99,cost:15.28,type:"physical",hc:true,sku:"JRN-CB-P"},
+  "Scholar's Reading Challenge (physical)":{price:24.99,cost:4.51,type:"physical",sku:"CHL-RC-P"},
+  "Autumn Reading Journal (physical)":{price:24.99,cost:6.06,type:"physical",sku:"JRN-ARJ-P"},
+  "Autumn TBR Journal (physical)":{price:24.99,cost:7.50,type:"physical",sku:"JRN-TBR-P"},
+  "Weekly Planner (physical)":{price:24.99,cost:6.63,type:"physical",sku:"PLN-WKP-P"},
+  "Self-Reflection Journal (physical)":{price:22.99,cost:4.77,type:"physical",sku:"JRN-SRJ-P"},
+  "Morning Reflection Journal (physical)":{price:22.99,cost:6.01,type:"physical",sku:"JRN-MRJ-P"},
+  "Scholar's Daily Reading Log (physical)":{price:27.99,cost:7.34,type:"physical",sku:"JRN-DRL-P"},
+  "Scholar's Annual Reading Planner (physical)":{price:19.99,cost:7.38,type:"physical",sku:"PLN-ARP-P"},
+  "Ancient Scholar Hebrew Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-HEB-P"},
+  "Ancient Scholar Greek Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-GRK-P"},
+  "Ancient Scholar Old English Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-OLE-P"},
+  "Scholar's Writing Companion Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-WRC-P"},
+  "Contemplative Scholar's Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-CTJ-P"},
+  "Scholar's Idea Capture Notebook (physical)":{price:18.99,cost:6.01,type:"physical",sku:"JRN-ICN-P"},
+  "Scholar's Advent Reading Calendar (physical)":{price:26.99,cost:4.16,type:"physical",sku:"JRN-ADV-P"},
+  "Scholar's Curiosity Journal Omnibus (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-OMS-P"},
   "Scholar's Year in Letters (physical)":{price:29.99,cost:9.99,type:"physical"},
   "Scholar's Curiosity Journal Vol I-VIII each (physical)":{price:29.99,cost:9.99,type:"physical"},
   "Bookmark Set I - Autumn Scholar":{price:12.99,cost:2.97,type:"physical"},
@@ -444,7 +444,8 @@ function calcRow(name){
   var price=getPrice(name);
   var printCost=getCost(name);
   var isPhys=DEFAULTS[name].type==="physical";
-  var totalCost=printCost+(isPhys?7.50:0);
+  var fulfill=isPhys?5.60:0;
+  var totalCost=printCost+(isPhys?fulfill:0);
   var shopNet=price-totalCost-(price*0.029+0.30);
   var etsyNet=price-totalCost-(price*0.095+0.45);
   var marg=price>0?shopNet/price*100:0;
@@ -459,7 +460,7 @@ function calcRow(name){
   if(sEl)sEl.className="val "+(shopNet>=0?"g":"r");
   if(eEl)eEl.textContent=fmt(etsyNet);
   if(eEl)eEl.className="val "+(etsyNet>=0?"s":"r");
-  if(cEl&&isPhys)cEl.textContent="+$7.50 = "+fmt(totalCost);
+  if(cEl&&isPhys)cEl.textContent="+$"+fulfill.toFixed(2)+" fulfillment = "+fmt(totalCost);
   // Update reset button visibility
   var rEl=document.getElementById("r_"+id);
   if(rEl)rEl.style.display=overrides[name]?"inline":"none";
@@ -474,14 +475,16 @@ function renderProducts(){
   var el=document.getElementById("product-list");
   if(!el)return;
   var html="";
-  var FULFILL=7.50;
+  var FULFILL_STD=5.60;
+  var FULFILL_HC=5.60;
   Object.keys(DEFAULTS).forEach(function(name){
     var d=DEFAULTS[name];
     if(prodFilter!=="all"&&d.type!==prodFilter)return;
     var price=getPrice(name);
     var cost=getCost(name);
     var isPhys=d.type==="physical";
-    var totalCost=cost+(isPhys?FULFILL:0);
+    var fulfill=isPhys?(d.hc?FULFILL_HC:FULFILL_STD):0;
+    var totalCost=cost+(isPhys?fulfill:0);
     var shopNet=price-totalCost-(price*0.029+0.30);
     var etsyNet=price-totalCost-(price*0.095+0.45);
     var marg=price>0?(shopNet/price*100):0;
@@ -499,6 +502,7 @@ function renderProducts(){
     html+="<div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px'>";
     html+="<span style='font-size:11px;color:"+(modified?"#E4C977":"#F5E6C8")+";font-weight:bold;flex:1;padding-right:6px;line-height:1.3'>"+name+"</span>";
     html+="<div style='display:flex;gap:4px;align-items:center;flex-shrink:0'>";
+    if(d.sku){html+="<span style='font-size:8px;color:#F5E6C877;font-family:monospace;background:#ffffff11;padding:1px 4px;border-radius:2px'>"+d.sku+"</span>";}
     html+="<span class='"+chipCls+"'>"+chipTxt+"</span>";
     if(modified){html+="<button class='btn sm' onclick=\"resetProd('"+safeName+"')\">reset</button>";}
     html+="</div></div>";
@@ -515,7 +519,7 @@ function renderProducts(){
     html+="<span style='color:#E4977a;font-size:13px'>$</span>";
     html+="<input class='cost' type='number' step='0.01' min='0' value='"+cost+"' oninput=\"setCost('"+safeName+"',this.value)\">";
     html+="</div>";
-    if(isPhys){html+="<div id='c_"+safeId+"' style='font-size:8px;color:#F5E6C844;margin-top:2px'>+$7.50 = $"+totalCost.toFixed(2)+"</div>";}
+    if(isPhys){html+="<div id='c_"+safeId+"' style='font-size:8px;color:#F5E6C844;margin-top:2px'>+$"+fulfill.toFixed(2)+" fulfillment = $"+totalCost.toFixed(2)+"</div>";}
     if(cost!==defCost){html+="<div style='font-size:8px;color:#F5E6C844;margin-top:2px'>default $"+defCost.toFixed(2)+"</div>";}
     html+="</div></div>";
     html+="<div class='res grid3'>";

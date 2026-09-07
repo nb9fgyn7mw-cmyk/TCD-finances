@@ -156,7 +156,7 @@ input.cost{background:#2D1F0A;border-color:#E4977a44;font-size:15px;color:#E4977
   <div style="text-align:center;margin-bottom:12px">
     <div style="font-size:18px;color:#E4C977" class="cz">Product Profitability</div>
     <div style="font-size:9px;color:#F5E6C866;margin-top:4px;line-height:1.8">
-      Shopify: 2.9% + $0.30 &nbsp;|&nbsp; Etsy: 9.5% + $0.45<br>Physical fulfillment: $5.60 all products (all under 1lb incl. packaging)<br><span style='font-size:9px;color:#F5E6C899'>Packaging $1.85: Kraft bubble mailer $1.00 + tissue $0.15 + wax seal $0.50 + card $0.10 + sticker $0.10 · USPS Media Mail under 1lb $3.75 · ⚠️ Classicist's Companion 0.982lb with packaging — weigh before shipping</span>
+      Shopify: 2.9% + $0.30 &nbsp;|&nbsp; Etsy: 9.5% + $0.45<br>Shipping base: $7.50 (blended average — FedEx Ground $6.72 single, USPS $6.99 multi)<br><span style='font-size:9px;color:#F5E6C899'>Single order packaging $1.31: Kraft bubble mailer $0.51 + tissue $0.15 + wax seal $0.50 + card $0.10 + envelope $0.05 · Box order packaging $2.14: box $1.23 + paper wrap $0.15 + cushion wrap $0.25 + tape $0.05 + wax seal $0.50 + card $0.10 + envelope $0.05 · Shipping varies by location — $7.50 used as conservative blended base</span>
     </div>
   </div>
   <div class="filters">
@@ -232,7 +232,7 @@ var DEFAULTS={
   "Book Club Kit (digital)":{price:8.99,cost:0,type:"digital",sku:"KIT-BCK-D"},
   "Bookmark Set Digital (digital)":{price:4.99,cost:0,type:"digital",sku:"BMK-DIG-D"},
   "Autumn Reading Journal (digital)":{price:8.99,cost:0,type:"digital",sku:"JRN-ARJ-D"},
-  "Autumn TBR Journal (digital)":{price:7.99,cost:0,type:"digital",sku:"JRN-TBR-D"},
+  "Autumn TBR Journal (digital)":{price:11.99,cost:0,type:"digital",sku:"JRN-TBR-D"},
   "Weekly Planner (digital)":{price:9.99,cost:0,type:"digital",sku:"PLN-WKP-D"},
   "Self-Reflection Journal (digital)":{price:8.99,cost:0,type:"digital",sku:"JRN-SRJ-D"},
   "Morning Reflection Journal (digital)":{price:9.99,cost:0,type:"digital",sku:"JRN-MRJ-D"},
@@ -242,18 +242,18 @@ var DEFAULTS={
   "Scholar's Commonplace Book (physical)":{price:44.99,cost:15.28,type:"physical",hc:true,sku:"JRN-CB-P"},
   "Scholar's Reading Challenge (physical)":{price:24.99,cost:4.51,type:"physical",sku:"CHL-RC-P"},
   "Autumn Reading Journal (physical)":{price:24.99,cost:6.06,type:"physical",sku:"JRN-ARJ-P"},
-  "Autumn TBR Journal (physical)":{price:24.99,cost:7.50,type:"physical",sku:"JRN-TBR-P"},
+  "Autumn TBR Journal (physical)":{price:27.99,cost:10.08,type:"physical",sku:"JRN-TBR-P"},
   "Weekly Planner (physical)":{price:24.99,cost:6.63,type:"physical",sku:"PLN-WKP-P"},
   "Self-Reflection Journal (physical)":{price:22.99,cost:4.77,type:"physical",sku:"JRN-SRJ-P"},
   "Morning Reflection Journal (physical)":{price:22.99,cost:6.01,type:"physical",sku:"JRN-MRJ-P"},
   "Scholar's Daily Reading Log (physical)":{price:27.99,cost:7.34,type:"physical",sku:"JRN-DRL-P"},
-  "Scholar's Annual Reading Planner (physical)":{price:19.99,cost:7.38,type:"physical",sku:"PLN-ARP-P"},
+  "Scholar's Annual Reading Planner (physical)":{price:22.99,cost:7.38,type:"physical",sku:"PLN-ARP-P"},
   "Ancient Scholar Hebrew Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-HEB-P"},
   "Ancient Scholar Greek Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-GRK-P"},
   "Ancient Scholar Old English Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-OLE-P"},
   "Scholar's Writing Companion Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-WRC-P"},
   "Contemplative Scholar's Journal (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-CTJ-P"},
-  "Scholar's Idea Capture Notebook (physical)":{price:18.99,cost:6.01,type:"physical",sku:"JRN-ICN-P"},
+  "Scholar's Idea Capture Notebook (physical)":{price:22.99,cost:6.01,type:"physical",sku:"JRN-ICN-P"},
   "Scholar's Advent Reading Calendar (physical)":{price:26.99,cost:4.16,type:"physical",sku:"JRN-ADV-P"},
   "Scholar's Curiosity Journal Omnibus (physical)":{price:29.99,cost:9.99,type:"physical",sku:"JRN-OMS-P"},
   "Scholar's Year in Letters (physical)":{price:29.99,cost:9.99,type:"physical"},
@@ -454,7 +454,7 @@ function calcRow(name){
   var price=getPrice(name);
   var printCost=getCost(name);
   var isPhys=DEFAULTS[name].type==="physical";
-  var fulfill=isPhys?5.60:0;
+  var fulfill=isPhys?7.50:0;
   var totalCost=printCost+(isPhys?fulfill:0);
   var shopNet=price-totalCost-(price*0.029+0.30);
   var etsyNet=price-totalCost-(price*0.095+0.45);
@@ -485,8 +485,8 @@ function renderProducts(){
   var el=document.getElementById("product-list");
   if(!el)return;
   var html="";
-  var FULFILL_STD=5.60;
-  var FULFILL_HC=5.60;
+  var FULFILL_STD=7.50;
+  var FULFILL_HC=7.50;
   Object.keys(DEFAULTS).forEach(function(name){
     var d=DEFAULTS[name];
     if(prodFilter!=="all"&&d.type!==prodFilter)return;
